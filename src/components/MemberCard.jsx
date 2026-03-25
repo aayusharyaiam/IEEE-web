@@ -6,7 +6,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const MemberCard = ({ name, role, index, image, linkedin, email }) => {
   const cardRef = useRef(null);
-  const hasSocialLinks = Boolean(linkedin || email);
+  const linkedinUrl = linkedin || 'https://www.linkedin.com/company/ieee-student-branch-bit-patna/';
+  const emailAddress = email || 'ieeebitp@gmail.com';
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -42,60 +43,48 @@ const MemberCard = ({ name, role, index, image, linkedin, email }) => {
         )}
         <div className="absolute inset-0 bg-linear-to-b from-transparent to-surface-container-lowest/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
         
-        {hasSocialLinks && (
-          <div className="social-overlay hidden md:flex absolute inset-0 bg-primary-container/60 backdrop-blur-sm items-center justify-center gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-            {linkedin && (
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open ${name} LinkedIn profile`}
-                className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
-              >
-                <span className="material-symbols-outlined">link</span>
-              </a>
-            )}
-            {email && (
-              <a
-                href={`mailto:${email}`}
-                aria-label={`Email ${name}`}
-                className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
-              >
-                <span className="material-symbols-outlined">alternate_email</span>
-              </a>
-            )}
-          </div>
-        )}
+        <div className="social-overlay hidden md:flex absolute inset-0 bg-primary-container/60 backdrop-blur-sm items-center justify-center gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${name} LinkedIn profile`}
+            className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
+          >
+            <span className="material-symbols-outlined">link</span>
+          </a>
+          <a
+            href={`mailto:${emailAddress}`}
+            aria-label={`Email ${name}`}
+            className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
+          >
+            <span className="material-symbols-outlined">alternate_email</span>
+          </a>
+        </div>
       </div>
       <div className="p-6">
         <h3 className="text-xl font-semibold text-on-surface mb-1 group-hover:text-tertiary transition-colors">{name}</h3>
         <p className="text-tertiary text-sm font-medium tracking-wider uppercase">{role}</p>
-        {hasSocialLinks && (
-          <div className="mt-4 flex md:hidden items-center gap-3">
-            {linkedin && (
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Open ${name} LinkedIn profile`}
-                className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
-              >
-                <span className="material-symbols-outlined text-base">link</span>
-                LinkedIn
-              </a>
-            )}
-            {email && (
-              <a
-                href={`mailto:${email}`}
-                aria-label={`Email ${name}`}
-                className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
-              >
-                <span className="material-symbols-outlined text-base">alternate_email</span>
-                Email
-              </a>
-            )}
-          </div>
-        )}
+        <div className="mt-4 flex md:hidden items-center gap-3">
+          <a
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${name} LinkedIn profile`}
+            className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
+          >
+            <span className="material-symbols-outlined text-base">link</span>
+            LinkedIn
+          </a>
+          <a
+            href={`mailto:${emailAddress}`}
+            aria-label={`Email ${name}`}
+            className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
+          >
+            <span className="material-symbols-outlined text-base">alternate_email</span>
+            Email
+          </a>
+        </div>
       </div>
     </div>
   );

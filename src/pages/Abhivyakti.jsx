@@ -17,17 +17,17 @@ const Abhivyakti = () => {
       description:
         'The flagship annual techno-cultural fest of BIT Patna returns bigger than ever. Three days of innovation, competitions, workshops, cultural performances, and networking powered by IEEE Student Branch BIT Patna.',
       events: [
-        { name: 'Robo Soccer', desc: 'Autonomous soccer robots equipped with advanced AI competing in thrilling matches.' },
-        { name: 'PCB Workshop', desc: 'Learn PCB design fundamentals from industry experts. Hands-on training in circuit design and prototyping.' },
-        { name: 'Technical Quiz', desc: 'Fast-paced quiz competition testing knowledge across electronics, programming, and emerging technologies.' },
-        { name: 'Mechatronics Systems Workshop', desc: 'Hands-on integration of mechanical, electrical, and control systems in real-world applications.' },
-        { name: 'Paper Presentation', desc: 'Present original research papers on innovative technical topics and emerging domains.' },
-        { name: 'Linux Workshop with Machine Learning', desc: 'Master Linux fundamentals and dive into Machine Learning applications and data science.' },
-        { name: 'Start Up Talk', desc: 'Entrepreneurs and startup founders share insights on building tech ventures and scaling products.' },
-        { name: 'Basic Electronics Workshop', desc: 'Foundation workshop covering circuit fundamentals, component identification, and practical soldering.' },
-        { name: 'E-Sports (BGMI)', desc: 'Competitive BGMI tournament with exciting prizes and intense team-based gameplay.' },
-        { name: 'E-Sports (Among Us)', desc: 'Strategy-based multiplayer competition testing communication and deduction skills.' },
-        { name: 'E-Sports (Pokémon Go)', desc: 'Location-based gaming competition combining outdoor adventure with gaming excitement.' },
+        { name: 'Robo Soccer', desc: 'Autonomous soccer robots equipped with advanced AI competing in thrilling matches.', coordinators: 'Sunny, Sourabh' },
+        { name: 'Paper Presentation', desc: 'Present original research papers on innovative technical topics and emerging domains.', coordinators: 'Rutika Deshmukh' },
+        { name: 'PCB Workshop', desc: 'Learn PCB design fundamentals from industry experts. Hands-on training in circuit design and prototyping.', coordinators: 'Spandan Roy, Aayush' },
+        { name: 'Linux and ML Workshop', desc: 'Master Linux fundamentals and dive into Machine Learning applications and data science.', coordinators: 'Rishika' },
+        { name: 'Mechatronics', desc: 'Hands-on integration of mechanical, electrical, and control systems in real-world applications.', coordinators: 'Spandan, Swapnadeep, Abhanshu' },
+        { name: 'Quiz and GenTech Quiz', desc: 'Fast-paced quiz competition testing knowledge across electronics, programming, and emerging technologies.', coordinators: 'Sahil, Ayushi, Monika' },
+        { name: 'E-Sports (BGMI/MLBB)', desc: 'Competitive BGMI and MLBB tournament with intense team-based gameplay.', coordinators: 'Nipun' },
+        { name: 'E-Sports (Among Us/Pokemon Go)', desc: 'Strategy and location-based gaming events testing deduction and adaptability.', coordinators: 'Anup' },
+        { name: 'Startup Talk', desc: 'Entrepreneurs and startup founders share insights on building and scaling products.', coordinators: 'Bhaskar' },
+        { name: 'Basic Electronics Workshop', desc: 'Foundation workshop covering circuit fundamentals, component identification, and practical soldering.', coordinators: 'Hiba' },
+        { name: 'Fun Event (Paint Ball)', desc: 'High-energy team activity designed for engagement, coordination, and fest spirit.', coordinators: 'To be announced' },
       ],
       team: [
         { name: 'Pranjal Bhattacharya', role: 'Chair' },
@@ -118,59 +118,70 @@ const Abhivyakti = () => {
 
   const eventTracks = [
     {
-      name: 'ROBO SOCCER ARENA',
+      name: 'ROBO SOCCER',
       desc: 'Autonomous robots competing in real-time soccer matches powered by neural networks.',
       code: 'TRK-01',
+      coordinators: 'Sunny, Sourabh',
     },
     {
-      name: 'CIRCUIT FORGE LAB',
-      desc: 'PCB design and manufacturing workshop with guided soldering and prototyping sessions.',
-      code: 'TRK-02',
-    },
-    {
-      name: 'TECH TRIVIA NEXUS',
-      desc: 'High-speed technical quiz testing core knowledge across electronics and programming.',
-      code: 'TRK-03',
-    },
-    {
-      name: 'MECHA-SYSTEMS CORE',
-      desc: 'Hands-on mechatronics workshop integrating mechanical, electrical, and control logic.',
-      code: 'TRK-04',
-    },
-    {
-      name: 'RESEARCH TRANSMISSION',
+      name: 'PAPER PRESENTATION',
       desc: 'Platform for presenting technical papers on emerging innovations and research breakthroughs.',
-      code: 'TRK-05',
+      code: 'TRK-02',
+      coordinators: 'Rutika Deshmukh',
     },
     {
-      name: 'NEURAL COMMAND STATION',
+      name: 'PCB WORKSHOP',
+      desc: 'PCB design and manufacturing workshop with guided soldering and prototyping sessions.',
+      code: 'TRK-03',
+      coordinators: 'Spandan Roy, Aayush',
+    },
+    {
+      name: 'LINUX AND ML WORKSHOP',
       desc: 'Linux training and ML masterclass exploring data science and artificial intelligence paradigms.',
+      code: 'TRK-04',
+      coordinators: 'Rishika',
+    },
+    {
+      name: 'MECHATRONICS',
+      desc: 'Hands-on mechatronics workshop integrating mechanical, electrical, and control logic.',
+      code: 'TRK-05',
+      coordinators: 'Spandan, Swapnadeep, Abhanshu',
+    },
+    {
+      name: 'QUIZ AND GENTECH QUIZ',
+      desc: 'High-speed technical quiz testing core knowledge across electronics and programming.',
       code: 'TRK-06',
+      coordinators: 'Sahil, Ayushi, Monika',
     },
     {
-      name: 'STARTUP COLLECTIVE',
-      desc: 'Networking sessions with tech entrepreneurs, founders, and venture leaders.',
+      name: 'E-SPORTS (BGMI/MLBB)',
+      desc: 'Competitive gaming arena featuring BGMI and MLBB tournaments with prizes.',
       code: 'TRK-07',
+      coordinators: 'Nipun',
     },
     {
-      name: 'ELECTRON WORKSHOP',
-      desc: 'Foundational electronics training covering circuits, components, and hands-on projects.',
+      name: 'E-SPORTS (AMONG US/POKEMON GO)',
+      desc: 'Strategy and location-based gaming rounds testing logic, communication, and adaptability.',
       code: 'TRK-08',
+      coordinators: 'Anup',
     },
     {
-      name: 'DIGI-COMBAT ZONE',
-      desc: 'Competitive gaming arena featuring BGMI tournaments with live streaming and prizes.',
+      name: 'STARTUP TALK',
+      desc: 'Networking sessions with tech entrepreneurs, founders, and venture leaders.',
       code: 'TRK-09',
+      coordinators: 'Bhaskar',
     },
     {
-      name: 'STRATEGY SPHERE',
-      desc: 'Among Us competitive matches testing logic, deduction, and team communication.',
+      name: 'BASIC ELECTRONICS WORKSHOP',
+      desc: 'Foundational electronics training covering circuits, components, and hands-on projects.',
       code: 'TRK-10',
+      coordinators: 'Hiba',
     },
     {
-      name: 'REALITY QUEST',
-      desc: 'Pokémon Go location-based gaming competition merging outdoor exploration with champions.',
+      name: 'FUN EVENT (PAINT BALL)',
+      desc: 'High-energy team activity designed for engagement, coordination, and fest spirit.',
       code: 'TRK-11',
+      coordinators: 'To be announced',
     },
   ];
 
@@ -259,6 +270,7 @@ const Abhivyakti = () => {
                 <p className="tron-card-code">{event.code}</p>
                 <h3 className="tron-card-title">{event.name}</h3>
                 <p className="tron-card-desc">{event.desc}</p>
+                <p className="mt-3 text-xs uppercase tracking-[0.16em] text-cyan-200/85">Coordinators: {event.coordinators}</p>
               </article>
             ))}
           </div>

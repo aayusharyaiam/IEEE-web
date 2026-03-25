@@ -169,8 +169,8 @@ const Home = () => {
       {/* 1. Hero Section */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         {/* Abstract Background Glows */}
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-[radial-gradient(circle_at_50%_50%,_var(--color-secondary-container-val)_0%,_transparent_70%)] opacity-30 pointer-events-none"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-[radial-gradient(circle_at_50%_50%,_var(--color-tertiary-container-val)_0%,_transparent_70%)] opacity-20 pointer-events-none"></div>
+        <div className="absolute top-[-10%] right-[-10%] w-125 h-125 bg-[radial-gradient(circle_at_50%_50%,var(--color-secondary-container-val)_0%,transparent_70%)] opacity-30 pointer-events-none"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-150 h-150 bg-[radial-gradient(circle_at_50%_50%,var(--color-tertiary-container-val)_0%,transparent_70%)] opacity-20 pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 w-full">
           <div className="lg:col-span-7">
@@ -179,9 +179,9 @@ const Home = () => {
               <span className="text-[10px] font-medium tracking-[0.2em] text-on-surface-variant uppercase">Innovate. Educate. Empower.</span>
             </div>
             
-            <h1 className="text-[2.5rem] md:text-7xl font-bold font-headline tracking-tighter leading-[1.1] mb-2 text-primary perspective-[800px]">
+            <h1 className="text-[2.5rem] md:text-7xl font-bold font-headline tracking-tighter leading-[1.1] mb-2 text-primary perspective-midrange">
               <span className="hero-title block">IEEE Student Branch</span>
-              <span className="hero-gradient block bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-tertiary opacity-0">BIT Patna</span>
+              <span className="hero-gradient block bg-clip-text text-transparent bg-linear-to-r from-primary via-secondary to-tertiary opacity-0">BIT Patna</span>
             </h1>
             
             <p className="hero-desc text-lg md:text-xl text-on-surface-variant max-w-xl mb-10 leading-relaxed font-light opacity-0 mt-6">
@@ -189,7 +189,7 @@ const Home = () => {
             </p>
             
             <div className="hero-btns flex flex-wrap gap-4">
-              <a href="https://www.ieee.org/membership/join" target="_blank" rel="noopener noreferrer" className="opacity-0 bg-gradient-to-r from-primary to-secondary text-on-primary px-10 py-4 rounded-xl font-bold tracking-tight hover:shadow-[0_0_30px_rgba(148,204,255,0.3)] hover:scale-105 active:scale-95 transition-all">
+              <a href="https://www.ieee.org/membership/join" target="_blank" rel="noopener noreferrer" className="opacity-0 bg-linear-to-r from-primary to-secondary text-on-primary px-10 py-4 rounded-xl font-bold tracking-tight hover:shadow-[0_0_30px_rgba(148,204,255,0.3)] hover:scale-105 active:scale-95 transition-all">
                 Explore Membership
               </a>
               <Link to="/events" className="opacity-0 px-10 py-4 rounded-xl border border-outline-variant/20 font-bold tracking-tight text-on-surface hover:bg-surface-container-low hover:scale-105 active:scale-95 transition-all">
@@ -199,7 +199,7 @@ const Home = () => {
           </div>
           
           {/* Floating Glass Cards */}
-          <div className="lg:col-span-5 relative h-[500px] hidden lg:block">
+          <div className="lg:col-span-5 relative h-125 hidden lg:block">
             <div className="float-card-1 absolute top-10 right-0 glass-panel p-6 rounded-lg border border-outline-variant/10 w-64 translate-x-4 opacity-0 hover:rotate-0 transition-transform duration-500 shadow-2xl cursor-pointer hover:scale-105 hover:shadow-[0_0_30px_rgba(60,215,255,0.15)]">
               <div className="flex flex-col">
                 <div className="flex items-center gap-4 mb-4">
@@ -232,7 +232,7 @@ const Home = () => {
             
             {/* Abstract Visual — parallax ring */}
             <div className="hero-ring absolute inset-0 flex items-center justify-center -z-10 opacity-30">
-              <div className="w-80 h-80 rounded-full border-[32px] border-primary-container"></div>
+              <div className="w-80 h-80 rounded-full border-32 border-primary-container"></div>
             </div>
           </div>
         </div>
@@ -281,7 +281,7 @@ const Home = () => {
             </p>
           </div>
           <div className="relative group scroll-reveal">
-            <div className="absolute -inset-1 bg-gradient-to-r from-tertiary to-secondary rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="absolute -inset-1 bg-linear-to-r from-tertiary to-secondary rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
             <div className="about-img relative aspect-video rounded-lg overflow-hidden bg-surface-container-low">
               <img className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="Tech" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPOIob7pMW6U0iwkLu6EXnmYqNdme4d6s1rO9f83pmSxWiKVdYZwdnQ9tFDnD2Y9MdaX2Xf4rXzF_ecqPRq6EjuzhNdMeRd4T0nrnKouG8bcwDwhnkLQS9sjZS7ur2LM1wfXIddGCI2UJbLrK5fpt6yRBkoqfmuCtP_3AEcUfnBsOqagb8EFR5lFOSS4QebyRIcw8ThgMeVxVziv_Q_OoG87k2Zud0qs4M75xUDO0Fmp7Pcg83bJQgssFqEm3gnyARjcgNqSoNUSEA"/>
             </div>
@@ -326,7 +326,7 @@ const Home = () => {
         </div>
         <div className="events-scroll flex overflow-x-auto gap-8 px-6 pb-12 no-scrollbar scroll-smooth">
           {/* Event Card 1 */}
-          <div className="event-card min-w-[350px] md:min-w-[400px] bg-surface-container-low rounded-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)]">
+          <div className="event-card min-w-87.5 md:min-w-100 bg-surface-container-low rounded-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)]">
             <div className="h-56 relative overflow-hidden">
               <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="robo soccer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsQm5TPTvvU6upcT6a9lk_4IpJWp7d_H9r6R5l2WZeEH5wvwHuBMuhcr71pWgYi2Fqnrdk0cMIaLA2fBTMnRabmENqzPM-yG6rffCmbPe1m4gtmpHZeQts_sdQDQLoh3YJU8Qtd3XRE-nfq-fh_FqMbFIIWN4bO-jdorTjYxCjoL11AdpdGAt5iG5sdasZbtd_38qYLpLHzK7OK9YIYruaL_Xp4JVCME6sUG0G4Jye82_JZ8H6DVQ1EL9c8j9sXZlvf5bdtQaDqAW3"/>
               <div className="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">Competition</div>
@@ -343,7 +343,7 @@ const Home = () => {
           </div>
           
           {/* Event Card 2 */}
-          <div className="event-card min-w-[350px] md:min-w-[400px] bg-surface-container-low rounded-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_10px_40px_-10px_rgba(148,204,255,0.2)]">
+          <div className="event-card min-w-87.5 md:min-w-100 bg-surface-container-low rounded-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_10px_40px_-10px_rgba(148,204,255,0.2)]">
             <div className="h-56 relative overflow-hidden">
               <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="pcb workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpbQZjY9ZPaJPn4Um5rwXuBhUcPqxyWgFLHxTQze6XoieUEceGIPF8AwLDbqmMH2tp-k-26crekFY2giXfWxr_RT6JiJlyFlpGd6ucdu72Dn-tZzoOSCTn750_dCzpilSZxNnCYyYiU-Q-t88h65GLXUlRG_184rx1tYw1mIG-mU8d-URGeQ-CrGmtLx5SjjdYZK_X6k_XJlKPOj8e6qQJnNI4FCNsGps5IWCAwA9rBYF4gHeLHWPUXrTkaF63sm5pfIjlBE2B6K84"/>
               <div className="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">Workshop</div>
@@ -360,7 +360,7 @@ const Home = () => {
           </div>
           
           {/* Event Card 3 */}
-          <div className="event-card min-w-[350px] md:min-w-[400px] bg-surface-container-low rounded-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)]">
+          <div className="event-card min-w-87.5 md:min-w-100 bg-surface-container-low rounded-lg overflow-hidden group hover:-translate-y-2 transition-transform duration-500 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)]">
             <div className="h-56 relative overflow-hidden">
               <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="linux workshop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK4CSVyyLluwUHDR-Yw0hshdQ4jE65TFQYPqoDJsPDA1UvmKlu5Jl7zVvdS7aTkG5Ox24HnCLfzZMw-JkB3LVw9x8k-AESzQo4NxW7ggF9zKnXkF5zsrIzLVZI9nW_Wszjfqf7GoDC_HIZINuTNrdT7eq5FkpyiTldApXmWvyoY2IthCJIz1NQaGZ6XNr3XriJrdcFW7CtS0haniVIgwN_5gzxBojfeCXjOMR3fF567pbBEVApUYpC2X2jP-ACtY9p6LWY8fLmEhB5"/>
               <div className="absolute top-4 left-4 bg-tertiary text-on-tertiary px-3 py-1 rounded text-[10px] font-bold uppercase tracking-widest">Workshop</div>
@@ -387,7 +387,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 md:auto-rows-[250px] gallery-grid">
           <div className="gallery-item col-span-2 md:row-span-2 rounded-lg overflow-hidden relative group cursor-pointer">
             <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXNZp-Z-j5YbI_5PuamVMrbbXQG7d4rb9jp3zzY7HKlC5JVfYmDDaSEKitVKvIhgj3z4WM9fmbQmHP6abe6rh1FITqYR_7t4thoUiqTYGz_r_KuzUI_BW8E-CcZIQ064qznmDrDscFrp1VCBWTJ4o_9yRn47H_aTBYdaGnh0hr4zGVr_vhqgF7VN5ATxZtw7Fs8npnbymKANQMVE3zN6fjtZsKwOFEsE24Ry8cmaevUN279aMYB2cQkUr7ltMpu8-eeQzAtpKphqEh"/>
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+            <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
               <p className="text-sm font-bold tracking-wider text-on-surface">Annual Technical Summit</p>
             </div>
           </div>
@@ -399,7 +399,7 @@ const Home = () => {
           </div>
           <div className="gallery-item col-span-2 rounded-lg overflow-hidden relative group cursor-pointer">
             <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfhaFHZu2WLCvWzDHEo7-uNoIq-HsmylU2iLxFUXitsmJZ1LcRtajR0tgIMzgIPTMiu6SkqjrOaQ9NofbnyiFc0gEtV1aWFQieQUrbU_4XiRi-M7HPckqEVmpMnUoT4oIMEz_TuiTVlLwHZFnZAxO_4JJf9dXRE_biZDLHwFC0ZA27kUhzfSC4csjXaFIroYuzthHUjv7Ak3i-WpOuwIkLLpJ_GqCwYTeFzj36EeXKcay_hVYPe9ffkBffkmyKxoz28emmaVl8CK3H"/>
-            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+            <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
               <p className="text-sm font-bold tracking-wider text-on-surface">Student Membership Drive</p>
             </div>
           </div>
@@ -429,9 +429,9 @@ const Home = () => {
 
               {/* Image & Title (Right side) */}
               <div className="counsellor-img md:col-span-5 lg:col-span-4 flex flex-col pt-8 md:pt-0 xl:pr-8">
-                <div className="w-full aspect-[4/5] overflow-hidden bg-surface-container-highest relative group shadow-lg border border-outline-variant/10 hover:shadow-[0_0_30px_rgba(60,215,255,0.15)] transition-shadow duration-500">
+                <div className="w-full aspect-4/5 overflow-hidden bg-surface-container-highest relative group shadow-lg border border-outline-variant/10 hover:shadow-[0_0_30px_rgba(60,215,255,0.15)] transition-shadow duration-500">
                   <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Mayank Singh" src="/mayank-sir.jpeg"/>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-tertiary/10 to-transparent group-hover:from-tertiary/20 transition-colors duration-500 z-10"></div>
+                  <div className="absolute inset-0 bg-linear-to-tr from-tertiary/10 to-transparent group-hover:from-tertiary/20 transition-colors duration-500 z-10"></div>
                 </div>
                 <div className="mt-6">
                   <h5 className="text-2xl font-bold text-on-surface">Dr. Mayank Singh</h5>
@@ -446,13 +446,13 @@ const Home = () => {
 
       {/* CTA Footer Section */}
       <section className="cta-section py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary-container/30"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-transparent to-primary-container/30"></div>
         <div className="cta-content max-w-7xl mx-auto px-6 relative z-10 text-center">
           <h2 className="text-4xl md:text-6xl font-bold font-headline tracking-tighter mb-8 uppercase text-on-surface">Ready to engineer the future?</h2>
           <p className="text-on-surface-variant text-lg max-w-2xl mx-auto mb-12">
             Join IEEE today and gain access to unparalleled resources, global networking, and opportunities to lead.
           </p>
-          <a href="https://www.ieee.org/membership/join" target="_blank" rel="noopener noreferrer" className="inline-block bg-gradient-to-r from-primary to-secondary text-on-primary px-12 py-5 rounded-xl font-bold text-lg hover:shadow-[0_0_50px_rgba(148,204,255,0.4)] hover:scale-105 active:scale-95 transition-all">
+          <a href="https://www.ieee.org/membership/join" target="_blank" rel="noopener noreferrer" className="inline-block bg-linear-to-r from-primary to-secondary text-on-primary px-12 py-5 rounded-xl font-bold text-lg hover:shadow-[0_0_50px_rgba(148,204,255,0.4)] hover:scale-105 active:scale-95 transition-all">
             Become a Member Now
           </a>
         </div>

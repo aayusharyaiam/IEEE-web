@@ -14,18 +14,19 @@ const Members = () => {
     { name: "Somanath Mahto", role: "Vice Chair Person", image: "", linkedin: "", email: "" },
     { name: "Harishta Chaubey", role: "Secretary", image: "", linkedin: "", email: "" },
     { name: "Rajdeep Das", role: "Co Secretary", image: "", linkedin: "", email: "" },
-    { name: "Aayush Arya", role: "Technical", image: "", linkedin: "", email: "" },
+    { name: "Mehran", role: "Web Master", image: "/members/md-mehran.jpg", linkedin: "", email: "" },
+    { name: "Aayush Arya", role: "Co Web Master", image: "/members/aayush-arya.jpeg", linkedin: "", email: "" },
     { name: "Ronak Sharma", role: "Treasurer", image: "", linkedin: "", email: "" },
-    { name: "Sahil Gurg", role: "Co Treasurer", image: "", linkedin: "", email: "" }
+    { name: "Sahil Gurg", role: "Co Treasurer", image: "/members/sahi-gurg.jpeg", linkedin: "", email: "" }
   ];
 
   const alumni = [
-    { name: "Arnav Shivam", role: "Chair Person", image: "", linkedin: "", email: "" },
-    { name: "Sneha Sharma", role: "Vice Chair Person", image: "", linkedin: "", email: "" },
-    { name: "Asman Kumari", role: "Secretary", image: "", linkedin: "", email: "" },
-    { name: "Syed Fahad Ahmed", role: "Treasurer", image: "", linkedin: "", email: "" },
-    { name: "Pushkar Kumar", role: "Technical Coordinator", image: "", linkedin: "", email: "" },
-    { name: "Meenakshi Sinha", role: "Design & Editing Coordinator", image: "", linkedin: "", email: "" }
+    { name: "Arnav Shivam", role: "Chair Person", image: "/members/arnav-shivam.jpg", linkedin: "", email: "" },
+    { name: "Sneha Sharma", role: "Vice Chair Person", image: "/members/sneha-sharma.jpg", linkedin: "", email: "" },
+    { name: "Asman Kumari", role: "Secretary", image: "/members/asman-kumari.jpg", linkedin: "", email: "" },
+    { name: "Syed Fahad Ahmed", role: "Treasurer", image: "/members/syed-fahad.jpg", linkedin: "", email: "" },
+    { name: "Pushkar Kumar", role: "Technical Coordinator", image: "/members/pushkar-kumar.jpg", linkedin: "", email: "" },
+    { name: "Meenakshi Sinha", role: "Design & Editing Coordinator", image: "/members/meenakshi-sinha.jpg", linkedin: "", email: "" }
   ];
 
   useEffect(() => {

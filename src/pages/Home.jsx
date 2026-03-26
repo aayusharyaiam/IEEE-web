@@ -386,19 +386,19 @@ const Home = () => {
         </div>
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-4 md:auto-rows-[250px] gallery-grid">
           <div className="gallery-item col-span-2 md:row-span-2 rounded-lg overflow-hidden relative group cursor-pointer">
-            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXNZp-Z-j5YbI_5PuamVMrbbXQG7d4rb9jp3zzY7HKlC5JVfYmDDaSEKitVKvIhgj3z4WM9fmbQmHP6abe6rh1FITqYR_7t4thoUiqTYGz_r_KuzUI_BW8E-CcZIQ064qznmDrDscFrp1VCBWTJ4o_9yRn47H_aTBYdaGnh0hr4zGVr_vhqgF7VN5ATxZtw7Fs8npnbymKANQMVE3zN6fjtZsKwOFEsE24Ry8cmaevUN279aMYB2cQkUr7ltMpu8-eeQzAtpKphqEh"/>
+            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 1" src="\public\gallery\pic2.jpg"/>
             <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
               <p className="text-sm font-bold tracking-wider text-on-surface">Annual Technical Summit</p>
             </div>
           </div>
           <div className="gallery-item col-span-1 rounded-lg overflow-hidden relative group cursor-pointer">
-            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT1D0PdZposEIWd8C5SMC_ehwsN2uz6lJORKcw4uYQdlhuLBqcky26EMYRGZLLZSvxNJYsgyJ6OusdjfdG2eYid2tu_7BChN177VBzcsX2FQtDoVWrXE2tzV0yUsWPSypTO_ArdZs51blwTS5doIkMVQuywjfYTLWTyUlXBHrVLsT5UZbon-Ki9bH3RFMbnMMpvLCl94du7-E0pio3J2kVlclgxuPGI9EiQqpRx3YX4U9fBOUZcungsJM6SsN-ReZ45JKmE0gfFSfm"/>
+            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 2" src="\public\gallery\pic3.jpg"/>
           </div>
           <div className="gallery-item col-span-1 rounded-lg overflow-hidden relative group cursor-pointer">
-            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXPXhLZccSUK_2HKQncxt-w19rJixe8OW1trfup19QDaHViYy8SkgTuLGun1YKlZGF383o5jW-nAjR51m2U4wQFbCQsOeM5v442B5i3SY3bjMe7a7knKxzjAVsVXKaSVlUNg1ylDZ4Kv5DZubc8bb7TIQ6DT53q3B4wl3oD7RLIYTBInlGjGrGMXj_dyqmXcwUQOkAgIb_5hBFpBmVMxANXCDbq95QfTytoL0Agk5-NHoFsk09S40Qf2TNArxDHJ6b8D0lZOJprnre"/>
+            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 3" src="\public\gallery\pic6.jpg"/>
           </div>
           <div className="gallery-item col-span-2 rounded-lg overflow-hidden relative group cursor-pointer">
-            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfhaFHZu2WLCvWzDHEo7-uNoIq-HsmylU2iLxFUXitsmJZ1LcRtajR0tgIMzgIPTMiu6SkqjrOaQ9NofbnyiFc0gEtV1aWFQieQUrbU_4XiRi-M7HPckqEVmpMnUoT4oIMEz_TuiTVlLwHZFnZAxO_4JJf9dXRE_biZDLHwFC0ZA27kUhzfSC4csjXaFIroYuzthHUjv7Ak3i-WpOuwIkLLpJ_GqCwYTeFzj36EeXKcay_hVYPe9ffkBffkmyKxoz28emmaVl8CK3H"/>
+            <img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="gallery 4" src="\public\gallery\pic9.jpg"/>
             <div className="absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
               <p className="text-sm font-bold tracking-wider text-on-surface">Student Membership Drive</p>
             </div>

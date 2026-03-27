@@ -11,13 +11,13 @@ const Members = () => {
 
   const members = [
     { name: "Pranjal Bhattacharya", role: "Chair Person", image: "", linkedin: "", email: "" },
-    { name: "Somnath Mahto", role: "Vice Chair Person", image: "/members/somnath-mahto.jpg", linkedin: "https://www.linkedin.com/in/somnath-mahto-", email: "somnathmahto2311@gmail.com" },
+    { name: "Somnath Mahto", role: "Vice Chair Person", image: "/members/somnath-mahto.jpg", linkedin: "https://www.linkedin.com/in/somnath-mahto-7bb41820b", email: "somnathmahto2311@gmail.com" },
     { name: "Harishta Chaubey", role: "Secretary", image: "", linkedin: "", email: "" },
     { name: "Rajdeep Das", role: "Co Secretary", image: "/members/rajdeep-das.jpg", linkedin: "https://www.linkedin.com/in/connectwithrajdeepdas", email: "123rajdeep.tech@gmail.com" },
     { name: "Mehran", role: "Web Master", image: "/members/md-mehran.jpg", linkedin: "https://www.linkedin.com/in/md-mehran-ansari-ba2a51291", email: "mdmehran1809@gmail.com" },
-    { name: "Aayush Arya", role: "Co Web Master", image: "/members/aayush-arya.jpeg", linkedin: "", email: "" },
-    { name: "Ronak Sharma", role: "Treasurer", image: "", linkedin: "", email: "" },
-    { name: "Sahil Gurg", role: "Co Treasurer", image: "/members/sahi-gurg.jpeg", linkedin: "", email: "" }
+    { name: "Aayush Arya", role: "Co Web Master", image: "/members/aayush-arya.jpeg", linkedin: "https://www.linkedin.com/in/aayusharyaiam", email: "aayush10738@gmail.com" },
+    { name: "Ronak Sharma", role: "Treasurer", image: "/members/ronak-sharma.jpg", linkedin: "https://www.linkedin.com/in/ronak-sharma-b651151b5/", email: "ronak.smhs@gmail.com" },
+    { name: "Sahil Gurg", role: "Co Treasurer", image: "/members/sahil-gurg.jpeg", linkedin: "https://www.linkedin.com/in/sahil-gurg-a8523931b/", email: "sahilgurg57@gmail.com" }
   ];
 
   const alumni = [

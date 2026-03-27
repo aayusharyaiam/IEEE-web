@@ -31,7 +31,7 @@ const Abhivyakti = () => {
       ],
       team: [
         { name: 'Pranjal Bhattacharya', role: 'Chair' },
-        { name: 'Somanath Mahto', role: 'Vice Chair' },
+        { name: 'Somnath Mahto', role: 'Vice Chair' },
         { name: 'Harishta Chaubey', role: 'Secretary' },
         { name: 'Rajdeep Das', role: 'Co Secretary' },
         { name: 'Aayush Arya', role: 'Technical' },
@@ -187,7 +187,7 @@ const Abhivyakti = () => {
 
   const commandCrew = [
     { name: 'Pranjal Bhattacharya', role: 'Chair' },
-    { name: 'Somanath Mahto', role: 'Vice Chair' },
+    { name: 'Somnath Mahto', role: 'Vice Chair' },
     { name: 'Harishta Chaubey', role: 'Secretary' },
     { name: 'Rajdeep Das', role: 'Co Secretary' },
     { name: 'Aayush Arya', role: 'Technical' },

@@ -36,17 +36,6 @@ const Gallery = () => {
         );
       });
 
-      // Featured spotlight parallax
-      gsap.fromTo('.spotlight-img',
-        { scale: 1.1 },
-        { scale: 1, scrollTrigger: { trigger: '.spotlight-section', start: 'top bottom', end: 'bottom top', scrub: 1.5 } }
-      );
-      gsap.fromTo('.spotlight-text > *',
-        { x: 40, opacity: 0 },
-        { x: 0, opacity: 1, stagger: 0.15, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: '.spotlight-section', start: 'top 75%' }
-        }
-      );
     });
     return () => ctx.revert();
   }, []);
@@ -108,24 +97,6 @@ const Gallery = () => {
         ))}
       </div>
 
-      {/* Featured Spotlight */}
-      <section className="spotlight-section mt-32">
-        <div className="bg-surface-container-low rounded-xl overflow-hidden flex flex-col lg:flex-row items-center">
-          <div className="w-full lg:w-3/5 overflow-hidden">
-            <img className="spotlight-img w-full h-[500px] object-cover" alt="Awards" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYi2qh2Q8PIzE29-b08ftr_aBNYih8itJoKtuFys9prD5VxJCQ4Qo003hhtkDRfiVuGZxWJlIWKBA9DDb165SVbTnFNCwq8GG-vFggEdtwlsFJD3eAnb_4qGruYYGyVmcVbdGCRoVnMjoVUi72_wTmiQsdoK5-TCtxM2hO1RGa4hag-_D6y4wu8FojAxmSDmeXJdQRmabuNrpyDSHVufrMnypZyncfw1qAbDfYOY1FfsBsQoh1XufICLgPc0p007Ob4uMPxkBk7Mxm"/>
-          </div>
-          <div className="spotlight-text w-full lg:w-2/5 p-12 lg:p-16">
-            <h2 className="text-3xl font-headline font-bold mb-6">IEEE Excellence Awards</h2>
-            <p className="text-on-surface-variant mb-8 leading-relaxed">
-              A retrospective look at our chapter's proudest moment—receiving the Outstanding Student Branch award. A celebration of hard work and dedication.
-            </p>
-            <button className="flex items-center gap-3 text-tertiary font-medium group/btn hover:gap-5 transition-all">
-              View Full Collection 
-              <span className="material-symbols-outlined transition-transform group-hover/btn:translate-x-2">arrow_forward</span>
-            </button>
-          </div>
-        </div>
-      </section>
     </main>
   );
 };

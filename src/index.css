@@ -189,7 +189,8 @@
   opacity: 1;
 }
 
-html { scroll-behavior: smooth; }
+/* Scrolling is coordinated by Lenis; do not enable competing CSS smooth scroll. */
+html { scroll-behavior: auto; }
 body { min-width: 320px; overflow-x: hidden; }
 button, a { -webkit-tap-highlight-color: transparent; }
 

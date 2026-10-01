@@ -7,7 +7,10 @@ const Navbar = () => {
   const navRef = useRef(null);
   const menuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    const stored = window.localStorage.getItem('ieee-theme');
+    return stored ? stored === 'dark' : true;
+  });
 
   useEffect(() => {
     if (isDark) {
@@ -15,14 +18,13 @@ const Navbar = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
+    window.localStorage.setItem('ieee-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
-
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark') || true);
-  }, []);
 
   // Close menu on route change
   useEffect(() => {
+    // Route changes can also come from browser history, so keep the overlay closed.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false);
   }, [location.pathname]);
 

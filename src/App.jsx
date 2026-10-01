@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTopButton from './components/ScrollToTop';
+import SiteLoader from './components/SiteLoader';
 import Home from './pages/Home';
 import Members from './pages/Members';
 import Events from './pages/Events';
@@ -32,6 +33,7 @@ function PageTransition({ children }) {
 function App() {
   return (
     <div className="bg-background min-h-screen text-on-surface overflow-x-hidden selection:bg-tertiary/30 selection:text-on-surface">
+      <SiteLoader />
       <Navbar />
       <main className="w-full">
         <PageTransition>

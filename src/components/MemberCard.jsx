@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,7 +31,7 @@ const MemberCard = ({ name, role, index, image, linkedin, email }) => {
     <div ref={cardRef} className="group member-card relative overflow-hidden rounded-lg bg-surface-container-low hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)] transition-all duration-500 perspective-[600px]">
       <div className="aspect-4/5 overflow-hidden relative bg-surface-container-highest flex items-center justify-center">
         {image ? (
-          <img
+          <ImageWithSkeleton
             src={image}
             alt={`${name} profile`}
             className="h-full w-full object-cover"

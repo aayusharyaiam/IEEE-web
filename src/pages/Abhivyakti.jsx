@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Abhivyakti.css';
+import SEO from '../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -216,6 +217,8 @@ const Abhivyakti = () => {
   }, [isTronYear]);
 
   return (
+    <>
+    <SEO title="Abhivyakti 2026" description="Abhivyakti is IEEE BIT Patna's annual techno-cultural festival of innovation, competitions, and creativity." path="/abhivyakti" />
     <main ref={pageRef} className={`${isTronYear ? 'tron-abhi' : 'bg-background'} pt-24 md:pt-32 pb-24 overflow-hidden relative`}>
       <section className="mx-auto max-w-6xl px-4 md:px-6">
         <div className="mb-10 flex items-center gap-2 overflow-x-auto pb-2">
@@ -340,6 +343,7 @@ const Abhivyakti = () => {
         )}
       </section>
     </main>
+    </>
   );
 };
 

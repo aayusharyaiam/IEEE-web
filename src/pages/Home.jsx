@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SEO from '../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -165,6 +166,7 @@ const Home = () => {
 
   return (
     <div className="bg-background text-on-surface font-body selection:bg-tertiary selection:text-on-tertiary overflow-x-hidden">
+      <SEO title="Student Branch" description="Discover IEEE BIT Patna's student community, leadership, events, and opportunities to innovate, learn, and grow." />
       
       {/* 1. Hero Section */}
       <section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
@@ -430,7 +432,7 @@ const Home = () => {
               {/* Image & Title (Right side) */}
               <div className="counsellor-img md:col-span-5 lg:col-span-4 flex flex-col pt-8 md:pt-0 xl:pr-8">
                 <div className="w-full aspect-4/5 overflow-hidden bg-surface-container-highest relative group shadow-lg border border-outline-variant/10 hover:shadow-[0_0_30px_rgba(60,215,255,0.15)] transition-shadow duration-500">
-                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Mayank Singh" src="/mayank-sir.jpeg"/>
+                  <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Dr. Mayank Singh, faculty advisor of IEEE BIT Patna" src="/mayank-sir-updated.jpeg" loading="lazy"/>
                   <div className="absolute inset-0 bg-linear-to-tr from-tertiary/10 to-transparent group-hover:from-tertiary/20 transition-colors duration-500 z-10"></div>
                 </div>
                 <div className="mt-6">

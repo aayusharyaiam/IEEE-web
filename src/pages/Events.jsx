@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import EventCard from '../components/EventCard';
+import SEO from '../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,6 +63,8 @@ const Events = () => {
   }, []);
 
   return (
+    <>
+      <SEO title="Events & Activities" description="Explore upcoming and past IEEE BIT Patna events, hackathons, workshops, and Abhivyakti celebrations." path="/events" />
     <main className="pt-24 pb-20">
       {/* Hero Section */}
       <section ref={heroRef} className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-20 text-center relative overflow-hidden">
@@ -101,6 +104,7 @@ const Events = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

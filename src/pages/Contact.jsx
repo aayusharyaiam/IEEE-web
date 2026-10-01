@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SEO from "../components/SEO";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,6 +91,7 @@ const Contact = () => {
 
   return (
     <>
+      <SEO title="Contact Us" description="Connect with IEEE Student Branch BIT Patna for collaborations, memberships, events, and student opportunities." path="/contact" />
       <main
         ref={pageRef}
         className="relative min-h-screen pt-24 pb-24 overflow-hidden"

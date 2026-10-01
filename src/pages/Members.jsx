@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MemberCard from '../components/MemberCard';
+import SEO from '../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -67,6 +68,8 @@ const Members = () => {
   }, []);
 
   return (
+    <>
+      <SEO title="Executive Committee" description="Meet the executive committee and alumni of IEEE Student Branch BIT Patna." path="/members" />
     <main className="pt-24 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto">
       {/* Page Header */}
       <header ref={headerRef} className="mb-12 md:mb-16">
@@ -79,9 +82,9 @@ const Members = () => {
       </header>
 
       {/* Current Member Grid */}
-      <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+      <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-4 md:gap-8">
         {members.map((member, index) => (
-          <div key={index} className="w-[calc(50%-0.5rem)] md:w-[calc(25%-1.5rem)] min-w-40 max-w-xs shrink-0">
+          <div key={index} className="w-full max-w-xs">
             <MemberCard
               name={member.name}
               role={member.role}
@@ -104,9 +107,9 @@ const Members = () => {
             Former executive committee members who laid the foundation of our student branch.
           </p>
         </header>
-        <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+        <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-4 md:gap-8">
           {alumni.map((member, index) => (
-            <div key={index} className="w-[calc(50%-0.5rem)] md:w-[calc(25%-1.5rem)] min-w-40 max-w-xs shrink-0 opacity-75 hover:opacity-100 transition-opacity">
+            <div key={index} className="w-full max-w-xs opacity-75 hover:opacity-100 transition-opacity">
               <MemberCard
                 name={member.name}
                 role={member.role}
@@ -120,6 +123,7 @@ const Members = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SEO from '../components/SEO';
+import ImageWithSkeleton from '../components/ImageWithSkeleton';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -68,6 +70,8 @@ const Gallery = () => {
     ];
 
   return (
+    <>
+      <SEO title="Photo Gallery" description="Browse moments from IEEE BIT Patna events, workshops, competitions, and student activities." path="/gallery" />
     <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
       {/* Header Section */}
       <header ref={headerRef} className="mb-12 md:mb-16">
@@ -83,8 +87,10 @@ const Gallery = () => {
         {galleryItems.map((item, index) => (
           <div key={index} className="masonry-item group relative cursor-pointer overflow-hidden rounded-xl bg-surface-container-low break-inside-avoid mb-8 hover:-translate-y-1 transition-transform duration-300">
             <div className="w-full aspect-square md:aspect-auto md:h-80 bg-surface-container-highest overflow-hidden transition-transform duration-700 group-hover:scale-110">
-              <img 
+              <ImageWithSkeleton 
                 src={item.image}  
+                alt={`IEEE BIT Patna event moment ${index + 1}`}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -98,6 +104,7 @@ const Gallery = () => {
       </div>
 
     </main>
+    </>
   );
 };
 

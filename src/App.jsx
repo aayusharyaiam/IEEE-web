@@ -21,12 +21,7 @@ function PageTransition({ children }) {
   useEffect(() => {
     // Cancel Lenis inertia and reset instantly on route change.
     resetScroll();
-    
-    // Animate page in
-    gsap.fromTo(wrapperRef.current,
-      { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
-    );
+    gsap.fromTo(wrapperRef.current, { opacity: 0 }, { opacity: 1, duration: 0.45, ease: 'power1.out' });
   }, [pathname]);
 
   return <div ref={wrapperRef} className="w-full">{children}</div>;
@@ -34,11 +29,12 @@ function PageTransition({ children }) {
 
 function App() {
   return (
-    <div className="bg-background min-h-screen text-on-surface overflow-x-hidden selection:bg-tertiary/30 selection:text-on-surface">
+    <div className="min-h-screen bg-canvas text-ink overflow-x-hidden">
       <SmoothScroll />
       <SiteLoader />
       <Navbar />
-      <main className="w-full">
+      {/* 44px global nav */}
+      <main className="w-full pt-11">
         <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />

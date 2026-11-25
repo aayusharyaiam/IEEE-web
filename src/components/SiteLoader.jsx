@@ -18,7 +18,6 @@ export default function SiteLoader() {
     <div className="site-loader" role="status" aria-label="Loading IEEE BIT Patna">
       <div className="site-loader__mark">IEEE</div>
       <div className="site-loader__bar"><span /></div>
-      <p>Loading innovation</p>
     </div>
   );
 }

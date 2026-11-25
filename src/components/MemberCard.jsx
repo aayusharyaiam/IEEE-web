@@ -1,93 +1,52 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { ChevronRight } from 'lucide-react';
 import ImageWithSkeleton from './ImageWithSkeleton';
+import { BRANCH_EMAIL, BRANCH_LINKEDIN } from '../data/committee';
 
-gsap.registerPlugin(ScrollTrigger);
+const initials = (name) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('');
 
-const MemberCard = ({ name, role, index, image, linkedin, email }) => {
-  const cardRef = useRef(null);
-  const linkedinUrl = linkedin || 'https://www.linkedin.com/company/ieee-student-branch-bit-patna/';
-  const emailAddress = email || 'ieeebitp@gmail.com';
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(cardRef.current,
-        { y: 60, opacity: 0, scale: 0.9, rotateY: -8 },
-        {
-          y: 0, opacity: 1, scale: 1, rotateY: 0,
-          duration: 0.8, ease: 'power3.out', delay: index * 0.1,
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: 'top 90%',
-          }
-        }
-      );
-    });
-    return () => ctx.revert();
-  }, [index]);
+/**
+ * Utility card: 18px radius, hairline border, 1:1-ish portrait with an 8px
+ * inner radius, name in body-strong, role in caption, text links below.
+ * `dark` switches to the near-black tile variant used for past committees.
+ */
+const MemberCard = ({ name, role, image, linkedin, email, dark = false, compact = false }) => {
+  const linkedinUrl = linkedin || BRANCH_LINKEDIN;
+  const emailAddress = email || BRANCH_EMAIL;
 
   return (
-    <div ref={cardRef} className="group member-card relative overflow-hidden rounded-lg bg-surface-container-low hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)] transition-all duration-500 perspective-[600px]">
-      <div className="aspect-4/5 overflow-hidden relative bg-surface-container-highest flex items-center justify-center">
+    <article className={`${dark ? 'card-dark on-dark' : 'card'} flex h-full flex-col ${compact ? '!p-4' : ''}`} data-reveal>
+      <div className={`aspect-[4/5] overflow-hidden rounded-sm ${dark ? 'bg-tile-3' : 'bg-parchment'}`}>
         {image ? (
-          <ImageWithSkeleton
-            src={image}
-            alt={`${name} profile`}
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
+          <ImageWithSkeleton src={image} alt={`${name}, ${role}`} className="h-full w-full object-cover" loading="lazy" />
         ) : (
-          <span className="text-6xl text-on-surface-variant/20 font-bold group-hover:text-tertiary/50 group-hover:scale-125 transition-all duration-500 uppercase">
-            {name.charAt(0)}
-          </span>
+          <div className="flex h-full w-full items-center justify-center" aria-hidden="true">
+            <span className={`t-display-lg ${dark ? 'text-white/25' : 'text-ink-48/50'}`}>{initials(name)}</span>
+          </div>
         )}
-        <div className="absolute inset-0 bg-linear-to-b from-transparent to-surface-container-lowest/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        
-        <div className="social-overlay hidden md:flex absolute inset-0 bg-primary-container/60 backdrop-blur-sm items-center justify-center gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${name} LinkedIn profile`}
-            className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
-          >
-            <span className="material-symbols-outlined">link</span>
-          </a>
-          <a
-            href={`mailto:${emailAddress}`}
-            aria-label={`Email ${name}`}
-            className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
-          >
-            <span className="material-symbols-outlined">alternate_email</span>
-          </a>
-        </div>
       </div>
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-on-surface mb-1 group-hover:text-tertiary transition-colors">{name}</h3>
-        <p className="text-tertiary text-sm font-medium tracking-wider uppercase">{role}</p>
-        <div className="mt-4 flex md:hidden items-center gap-3">
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${name} LinkedIn profile`}
-            className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-base">link</span>
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${emailAddress}`}
-            aria-label={`Email ${name}`}
-            className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-base">alternate_email</span>
-            Email
-          </a>
-        </div>
+
+      <div className="mt-4 flex flex-1 flex-col">
+        <p className={`t-caption ${dark ? 'text-body-muted' : 'text-ink-48'}`}>{role}</p>
+        <h3 className={`${compact ? 't-caption-strong' : 't-body-strong'} mt-0.5`}>{name}</h3>
+        {!compact && (
+          <div className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-3 t-caption">
+            <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="link" aria-label={`${name} on LinkedIn`}>
+              LinkedIn <ChevronRight size={12} strokeWidth={2} />
+            </a>
+            <a href={`mailto:${emailAddress}`} className="link" aria-label={`Email ${name}`}>
+              Email <ChevronRight size={12} strokeWidth={2} />
+            </a>
+          </div>
+        )}
       </div>
-    </div>
+    </article>
   );
 };
 

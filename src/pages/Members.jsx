@@ -1,129 +1,79 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 import MemberCard from '../components/MemberCard';
+import ImageWithSkeleton from '../components/ImageWithSkeleton';
 import SEO from '../components/SEO';
-
-gsap.registerPlugin(ScrollTrigger);
+import useReveal from '../hooks/useReveal';
+import { committee, currentTerm, facultyAdvisor, pastCommittees } from '../data/committee';
 
 const Members = () => {
-  const headerRef = useRef(null);
-  const alumniHeaderRef = useRef(null);
-
-  const members = [
-    { name: "Pranjal Bhattacharya", role: "Chair Person", image: "", linkedin: "", email: "" },
-    { name: "Somnath Mahto", role: "Vice Chair Person", image: "/members/somnath-mahto.jpg", linkedin: "https://www.linkedin.com/in/somnath-mahto-7bb41820b", email: "somnathmahto2311@gmail.com" },
-    { name: "Harishta Chaubey", role: "Secretary", image: "", linkedin: "", email: "" },
-    { name: "Rajdeep Das", role: "Co Secretary", image: "/members/rajdeep-das.jpg", linkedin: "https://www.linkedin.com/in/connectwithrajdeepdas", email: "123rajdeep.tech@gmail.com" },
-    { name: "Mehran", role: "Web Master", image: "/members/md-mehran.jpg", linkedin: "https://www.linkedin.com/in/md-mehran-ansari-ba2a51291", email: "mdmehran1809@gmail.com" },
-    { name: "Aayush Arya", role: "Co Web Master", image: "/members/aayush-arya.jpeg", linkedin: "https://www.linkedin.com/in/aayusharyaiam", email: "aayush10738@gmail.com" },
-    { name: "Ronak Sharma", role: "Treasurer", image: "/members/ronak-sharma.jpg", linkedin: "https://www.linkedin.com/in/ronak-sharma-b651151b5/", email: "ronak.smhs@gmail.com" },
-    { name: "Sahil Gurg", role: "Co Treasurer", image: "/members/sahil-gurg.jpeg", linkedin: "https://www.linkedin.com/in/sahil-gurg-a8523931b/", email: "sahilgurg57@gmail.com" }
-  ];
-
-  const alumni = [
-    { name: "Arnav Shivam", role: "Chair Person", image: "/members/arnav-shivam.jpg", linkedin: "", email: "" },
-    { name: "Sneha Sharma", role: "Vice Chair Person", image: "/members/sneha-sharma.jpg", linkedin: "", email: "" },
-    { name: "Asman Kumari", role: "Secretary", image: "/members/asman-kumari.jpg", linkedin: "", email: "" },
-    { name: "Syed Fahad Ahmed", role: "Treasurer", image: "/members/syed-fahad.jpg", linkedin: "", email: "" },
-    { name: "Pushkar Kumar", role: "Technical Coordinator", image: "/members/pushkar-kumar.jpg", linkedin: "", email: "" },
-    { name: "Meenakshi Sinha", role: "Design & Editing Coordinator", image: "/members/meenakshi-sinha.jpg", linkedin: "", email: "" }
-  ];
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Hero split-text
-      const h1 = headerRef.current?.querySelector('.members-title');
-      if (h1) {
-        const text = h1.textContent;
-        h1.innerHTML = text.replace(/\S+/g, '<span class="mem-word inline-block">$&</span>');
-        gsap.fromTo('.mem-word',
-          { y: 50, opacity: 0, rotateX: -45 },
-          { y: 0, opacity: 1, rotateX: 0, duration: 0.7, stagger: 0.06, ease: 'power4.out', delay: 0.15 }
-        );
-      }
-      gsap.fromTo('.members-desc',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.5 }
-      );
-
-      // Alumni section header animation
-      const alumniTitle = alumniHeaderRef.current?.querySelector('.alumni-title');
-      if (alumniTitle) {
-        gsap.fromTo(alumniTitle,
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: alumniTitle, start: 'top 85%' }
-          }
-        );
-      }
-      gsap.fromTo('.alumni-desc',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: '.alumni-desc', start: 'top 85%' }
-        }
-      );
-    });
-    return () => ctx.revert();
-  }, []);
+  const pageRef = useReveal();
 
   return (
-    <>
-      <SEO title="Executive Committee" description="Meet the executive committee and alumni of IEEE Student Branch BIT Patna." path="/members" />
-    <main className="pt-24 md:pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto">
-      {/* Page Header */}
-      <header ref={headerRef} className="mb-12 md:mb-16">
-        <h1 className="members-title text-4xl md:text-7xl font-bold tracking-[-0.02em] text-primary mb-6 uppercase leading-tight perspective-midrange">
-          EXECUTIVE COMMITTEE
-        </h1>
-        <p className="members-desc text-on-surface-variant text-base md:text-xl max-w-2xl font-light leading-relaxed opacity-0">
-          Meet the dedicated team at IEEE Student Branch BIT Patna. Engineering solutions, fostering community, and leading the digital frontier.
-        </p>
-      </header>
+    <div ref={pageRef}>
+      <SEO
+        title="Executive Committee"
+        description={`Meet the ${currentTerm} executive committee, faculty advisor and alumni of IEEE Student Branch BIT Patna.`}
+        path="/members"
+      />
 
-      {/* Current Member Grid */}
-      <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-4 md:gap-8">
-        {members.map((member, index) => (
-          <div key={index} className="w-full max-w-xs">
-            <MemberCard
-              name={member.name}
-              role={member.role}
-              image={member.image}
-              linkedin={member.linkedin}
-              email={member.email}
-              index={index}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Alumni Section */}
-      <section className="mt-24 md:mt-32">
-        <header ref={alumniHeaderRef} className="mb-12 md:mb-16">
-          <h2 className="alumni-title text-3xl md:text-5xl font-bold tracking-[-0.02em] text-on-surface-variant/70 mb-4 uppercase leading-tight">
-            Alumni
-          </h2>
-          <p className="alumni-desc text-on-surface-variant/50 text-base md:text-lg max-w-2xl font-light leading-relaxed opacity-0">
-            Former executive committee members who laid the foundation of our student branch.
+      {/* Hero */}
+      <section className="tile tile-light text-center">
+        <div className="mx-auto max-w-[980px]">
+          <p className="t-tagline text-ink-48" data-reveal>Executive Committee {currentTerm}</p>
+          <h1 className="t-hero mt-3" data-reveal data-reveal-delay="0.05">The people behind the branch.</h1>
+          <p className="t-body mx-auto mt-5 max-w-[640px] text-ink-80" data-reveal data-reveal-delay="0.1">
+            Meet the dedicated team at IEEE Student Branch BIT Patna. Engineering solutions, fostering community, and leading the digital frontier.
           </p>
-        </header>
-        <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-4 md:gap-8">
-          {alumni.map((member, index) => (
-            <div key={index} className="w-full max-w-xs opacity-75 hover:opacity-100 transition-opacity">
-              <MemberCard
-                name={member.name}
-                role={member.role}
-                image={member.image}
-                linkedin={member.linkedin}
-                email={member.email}
-                index={index}
-              />
+        </div>
+
+        <div className="mx-auto mt-14 grid max-w-[1200px] grid-cols-2 gap-4 text-left sm:grid-cols-3 lg:grid-cols-5 lg:gap-5">
+          {committee.map((member) => (
+            <MemberCard key={member.name} {...member} />
+          ))}
+        </div>
+      </section>
+
+      {/* Faculty advisor */}
+      <section className="tile tile-parchment">
+        <div className="mx-auto grid max-w-[980px] items-center gap-10 md:grid-cols-[minmax(0,320px)_1fr] md:gap-16">
+          <div className="mx-auto w-full max-w-[320px] overflow-hidden rounded-lg aspect-[4/5]" data-reveal>
+            <ImageWithSkeleton src={facultyAdvisor.image} alt={`${facultyAdvisor.name}, ${facultyAdvisor.title}`} className="h-full w-full object-cover" loading="lazy" />
+          </div>
+          <div className="text-center md:text-left" data-reveal data-reveal-delay="0.1">
+            <p className="eyebrow">Faculty Advisor</p>
+            <h2 className="t-display-lg mt-2">{facultyAdvisor.name}</h2>
+            <p className="t-lead-airy mt-3 text-ink-80">
+              {facultyAdvisor.role}
+              <br />
+              {facultyAdvisor.title}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Past committees */}
+      <section className="tile tile-dark on-dark">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mx-auto max-w-[980px] text-center">
+            <h2 className="t-display-lg" data-reveal>Alumni</h2>
+            <p className="t-body mx-auto mt-4 max-w-[560px] text-body-muted" data-reveal>
+              Former executive committee members who laid the foundation of our student branch.
+            </p>
+          </div>
+
+          {pastCommittees.map((group) => (
+            <div key={group.term} className="mt-14">
+              <h3 className="t-tagline mb-5 text-white" data-reveal>{group.term}</h3>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 md:gap-4">
+                {group.members.map((member) => (
+                  <MemberCard key={`${group.term}-${member.name}`} {...member} dark compact />
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </section>
-    </main>
-    </>
+    </div>
   );
 };
 

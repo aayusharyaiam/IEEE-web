@@ -1,20 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import './Abhivyakti.css';
+import React, { useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
-
-gsap.registerPlugin(ScrollTrigger);
+import useReveal from '../hooks/useReveal';
 
 const Abhivyakti = () => {
-  const pageRef = useRef(null);
   const [activeTab, setActiveTab] = useState('2026');
+  const pageRef = useReveal(activeTab);
 
   const yearData = {
     '2026': {
       dates: 'March 26-28, 2026',
-      status: 'live',
-      tagline: 'Currently Live',
+      status: 'past',
+      tagline: 'Successfully Concluded',
       description:
         'The flagship annual techno-cultural fest of BIT Patna returns bigger than ever. Three days of innovation, competitions, workshops, cultural performances, and networking powered by IEEE Student Branch BIT Patna.',
       events: [
@@ -113,237 +110,107 @@ const Abhivyakti = () => {
     },
   };
 
-  const years = Object.keys(yearData).sort((a, b) => parseInt(b) - parseInt(a));
+  const years = Object.keys(yearData).sort((a, b) => parseInt(b, 10) - parseInt(a, 10));
   const currentData = yearData[activeTab];
-  const isTronYear = activeTab === '2026';
-
-  const eventTracks = [
-    {
-      name: 'ROBO SOCCER',
-      desc: 'Autonomous robots competing in real-time soccer matches powered by neural networks.',
-      code: 'TRK-01',
-      coordinators: 'Sunny, Sourabh',
-    },
-    {
-      name: 'PAPER PRESENTATION',
-      desc: 'Platform for presenting technical papers on emerging innovations and research breakthroughs.',
-      code: 'TRK-02',
-      coordinators: 'Rutika Deshmukh',
-    },
-    {
-      name: 'PCB WORKSHOP',
-      desc: 'PCB design and manufacturing workshop with guided soldering and prototyping sessions.',
-      code: 'TRK-03',
-      coordinators: 'Spandan Roy, Aayush',
-    },
-    {
-      name: 'LINUX AND ML WORKSHOP',
-      desc: 'Linux training and ML masterclass exploring data science and artificial intelligence paradigms.',
-      code: 'TRK-04',
-      coordinators: 'Rishika',
-    },
-    {
-      name: 'MECHATRONICS',
-      desc: 'Hands-on mechatronics workshop integrating mechanical, electrical, and control logic.',
-      code: 'TRK-05',
-      coordinators: 'Spandan, Swapnadeep, Abhanshu',
-    },
-    {
-      name: 'QUIZ AND GENTECH QUIZ',
-      desc: 'High-speed technical quiz testing core knowledge across electronics and programming.',
-      code: 'TRK-06',
-      coordinators: 'Sahil, Ayushi, Monika',
-    },
-    {
-      name: 'E-SPORTS (BGMI/MLBB)',
-      desc: 'Competitive gaming arena featuring BGMI and MLBB tournaments with prizes.',
-      code: 'TRK-07',
-      coordinators: 'Nipun',
-    },
-    {
-      name: 'E-SPORTS (AMONG US/POKEMON GO)',
-      desc: 'Strategy and location-based gaming rounds testing logic, communication, and adaptability.',
-      code: 'TRK-08',
-      coordinators: 'Anup',
-    },
-    {
-      name: 'STARTUP TALK',
-      desc: 'Networking sessions with tech entrepreneurs, founders, and venture leaders.',
-      code: 'TRK-09',
-      coordinators: 'Bhaskar',
-    },
-    {
-      name: 'BASIC ELECTRONICS WORKSHOP',
-      desc: 'Foundational electronics training covering circuits, components, and hands-on projects.',
-      code: 'TRK-10',
-      coordinators: 'Hiba',
-    },
-    {
-      name: 'FUN EVENT (PAINT BALL)',
-      desc: 'High-energy team activity designed for engagement, coordination, and fest spirit.',
-      code: 'TRK-11',
-      coordinators: 'To be announced',
-    },
-  ];
-
-  const commandCrew = [
-    { name: 'Pranjal Bhattacharya', role: 'Chair' },
-    { name: 'Somnath Mahto', role: 'Vice Chair' },
-    { name: 'Harishta Chaubey', role: 'Secretary' },
-    { name: 'Rajdeep Das', role: 'Co Secretary' },
-    { name: 'Aayush Arya', role: 'Technical' },
-    { name: 'Ronak Sharma', role: 'Treasurer' },
-    { name: 'Sahil Gurg', role: 'Co Treasurer' },
-  ];
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.tron-reveal',
-        { y: 35, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.75, stagger: 0.1, ease: 'power3.out' }
-      );
-
-      gsap.to('.tron-pulse', {
-        boxShadow: '0 0 45px rgba(0, 247, 255, 0.55)',
-        duration: 1.8,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      });
-    });
-
-    return () => ctx.revert();
-  }, [isTronYear]);
+  const isFlagship = activeTab === '2026';
 
   return (
-    <>
-    <SEO title="Abhivyakti 2026" description="Abhivyakti is IEEE BIT Patna's annual techno-cultural festival of innovation, competitions, and creativity." path="/abhivyakti" />
-    <main ref={pageRef} className={`${isTronYear ? 'tron-abhi' : 'bg-background'} pt-24 md:pt-32 pb-24 overflow-hidden relative`}>
-      <section className="mx-auto max-w-6xl px-4 md:px-6">
-        <div className="mb-10 flex items-center gap-2 overflow-x-auto pb-2">
-          {years.map((year) => (
-            <button
-              key={year}
-              type="button"
-              onClick={() => setActiveTab(year)}
-              className={`abhi-tab ${activeTab === year ? (isTronYear ? 'abhi-tab-active-tron' : 'abhi-tab-active-normal') : 'abhi-tab-inactive'}`}
-            >
-              {year}
-            </button>
-          ))}
-        </div>
+    <div ref={pageRef}>
+      <SEO title={`Abhivyakti ${activeTab}`} description="Abhivyakti is IEEE BIT Patna's annual techno-cultural festival of innovation, competitions, and creativity." path="/abhivyakti" />
 
-        {isTronYear ? (
-          <>
-        <div className="tron-reveal inline-flex items-center gap-3 rounded-full border border-cyan-300/60 bg-cyan-500/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-200">
-          <span className="h-2 w-2 rounded-full bg-cyan-300 tron-pulse" />
-          Live Transmission
+      {/* Frosted sub-nav: festival name + edition switcher */}
+      <div className="sticky top-11 z-30 frosted border-b border-black/[0.08]">
+        <div className="mx-auto flex h-[52px] max-w-[1024px] items-center gap-6 px-4 md:px-6">
+          <span className="t-tagline shrink-0">Abhivyakti</span>
+          <div className="no-scrollbar ml-auto flex items-center gap-1 overflow-x-auto" role="tablist" aria-label="Edition">
+            {years.map((year) => (
+              <button
+                key={year}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === year}
+                onClick={() => setActiveTab(year)}
+                className={`shrink-0 rounded-full px-3 py-1 t-caption transition-colors ${
+                  activeTab === year ? 'bg-ink text-white' : 'text-ink-80 hover:text-ink'
+                }`}
+              >
+                {year}
+              </button>
+            ))}
+          </div>
         </div>
+      </div>
 
-        <header className="mt-6 tron-reveal">
-          <p className="text-cyan-100/80 text-sm tracking-[0.28em] uppercase">{currentData.dates} | BIT Patna</p>
-          <h1 className="mt-3 text-5xl md:text-7xl font-black uppercase tracking-[0.06em] tron-title">
-            Abhivyakti {activeTab}
-          </h1>
-          <p className="mt-6 max-w-3xl text-base md:text-lg text-cyan-50/80 leading-relaxed">
-            Enter the TRON Ares circuit. {currentData.description}
+      {/* Hero — dark tile for the flagship edition, light for the archive */}
+      <section className={`tile text-center ${isFlagship ? 'tile-black on-dark' : 'tile-light'}`}>
+        <div className="mx-auto max-w-[980px]">
+          <p className={`t-tagline ${isFlagship ? 'text-body-muted' : 'text-ink-48'}`} data-reveal>
+            {currentData.dates} · {currentData.tagline}
           </p>
-        </header>
-
-        <div className="tron-reveal mt-10 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {[
-            ['03', 'DAYS'],
-            ['11', 'EVENTS'],
-            ['∞', 'INTENSITY'],
-            ['1', 'FEST'],
-          ].map(([value, label]) => (
-            <div key={label} className="tron-stat">
-              <p className="tron-stat-value">{value}</p>
-              <p className="tron-stat-label">{label}</p>
-            </div>
-          ))}
+          <h1 className="t-hero mt-3" data-reveal data-reveal-delay="0.05">Abhivyakti {activeTab}</h1>
+          <p className={`t-body mx-auto mt-5 max-w-[680px] ${isFlagship ? 'text-body-muted' : 'text-ink-80'}`} data-reveal data-reveal-delay="0.1">
+            {currentData.description}
+          </p>
+          {isFlagship && (
+            <>
+              <dl className="mx-auto mt-12 grid max-w-[640px] grid-cols-3 gap-6" data-reveal>
+                {[
+                  ['3', 'Days'],
+                  [String(currentData.events.length), 'Events'],
+                  ['1', 'Fest'],
+                ].map(([value, label]) => (
+                  <div key={label} className="flex flex-col-reverse">
+                    <dt className="t-caption text-body-muted">{label}</dt>
+                    <dd className="t-display-lg">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="mt-10" data-reveal>
+                <a href="https://linktr.ee/Abhivyakti_2k26" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  Abhivyakti 2026 links <ArrowUpRight size={16} strokeWidth={1.75} />
+                </a>
+              </div>
+            </>
+          )}
         </div>
+      </section>
 
-        <section className="mt-14 tron-reveal">
-          <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-[0.16em] text-cyan-100">Event Tracks</h2>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventTracks.map((event) => (
-              <article key={event.code} className="tron-card">
-                <p className="tron-card-code">{event.code}</p>
-                <h3 className="tron-card-title">{event.name}</h3>
-                <p className="tron-card-desc">{event.desc}</p>
-                <p className="mt-3 text-xs uppercase tracking-[0.16em] text-cyan-200/85">Coordinators: {event.coordinators}</p>
+      {/* Events */}
+      <section className="tile tile-parchment">
+        <div className="mx-auto max-w-[1100px]">
+          <h2 className="t-display-lg text-center" data-reveal>{isFlagship ? 'Event tracks' : 'Events and highlights'}</h2>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {currentData.events.map((event, idx) => (
+              <article key={`${activeTab}-${event.name}`} className="card flex flex-col" data-reveal>
+                <p className="t-caption-strong text-ink-48">{String(idx + 1).padStart(2, '0')}</p>
+                <h3 className="t-tagline mt-2">{event.name}</h3>
+                <p className="t-body mt-2 text-ink-80">{event.desc}</p>
+                {event.coordinators && (
+                  <p className="t-caption mt-auto pt-4 text-ink-48">Coordinators: {event.coordinators}</p>
+                )}
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Organising committee */}
+      {currentData.team.length > 0 && (
+        <section className="tile tile-dark on-dark">
+          <div className="mx-auto max-w-[1100px]">
+            <h2 className="t-display-lg text-center" data-reveal>Organising committee</h2>
+            <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {currentData.team.map((member) => (
+                <li key={member.name} className="card-dark !p-5" data-reveal>
+                  <p className="t-caption text-body-muted">{member.role}</p>
+                  <p className="t-body-strong mt-1">{member.name}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
-      <section className="mx-auto max-w-6xl px-4 md:px-6 mt-16 md:mt-20 tron-reveal">
-        <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-[0.14em] text-cyan-100">Command Crew</h2>
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {commandCrew.map((member) => (
-            <article key={member.name} className="tron-crew-card">
-              <p className="tron-crew-role">{member.role}</p>
-              <h3 className="tron-crew-name">{member.name}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 md:px-6 mt-14 tron-reveal">
-        <div className="tron-ticket-panel">
-          <p className="text-cyan-300 text-xs uppercase tracking-[0.28em]">Transmission Endpoints</p>
-          <h2 className="mt-2 text-2xl md:text-4xl font-bold uppercase tracking-[0.12em] text-cyan-100">
-            Register. Compete. Illuminate.
-          </h2>
-          <p className="mt-4 max-w-2xl text-cyan-50/75">
-            Limited arena slots per track. Team registration closes when each bracket reaches capacity.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScZ9vqyVfSn0KqixIW3PFiECYP9bkn8a9Z9Q0KowMmhvak_EQ/viewform" target="_blank" rel="noopener noreferrer" className="tron-btn tron-btn-primary inline-block">Register Now</a>
-            <a href="https://linktr.ee/Abhivyakti_2k26" target="_blank" rel="noopener noreferrer" className="tron-btn tron-btn-secondary inline-block">Download Rulebook</a>
-          </div>
-        </div>
-      </section>
-          </>
-        ) : (
-          <div className="pb-4">
-            <header className="mb-8">
-              <h1 className="text-4xl md:text-6xl font-black tracking-tight text-primary uppercase">Abhivyakti {activeTab}</h1>
-              <p className="mt-4 text-on-surface-variant max-w-3xl leading-relaxed">{currentData.dates} - {currentData.tagline}</p>
-              <p className="mt-3 text-on-surface-variant max-w-3xl leading-relaxed">{currentData.description}</p>
-            </header>
-
-            <section className="mb-10">
-              <h2 className="text-2xl font-bold text-on-surface mb-4 uppercase">Events and Highlights</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {currentData.events.map((event, idx) => (
-                  <article key={`${activeTab}-${idx}`} className="p-5 rounded-xl bg-surface-container-low border border-outline-variant/20">
-                    <h3 className="font-semibold text-on-surface">{event.name}</h3>
-                    <p className="mt-2 text-sm text-on-surface-variant leading-relaxed">{event.desc}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            {currentData.team.length > 0 && (
-              <section>
-                <h2 className="text-2xl font-bold text-on-surface mb-4 uppercase">Organizing Committee</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {currentData.team.map((member) => (
-                    <article key={member.name} className="p-5 rounded-xl bg-surface-container-low border border-outline-variant/20">
-                      <p className="text-xs uppercase tracking-[0.18em] text-on-surface-variant">{member.role}</p>
-                      <h3 className="mt-2 text-on-surface font-semibold">{member.name}</h3>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
-        )}
-      </section>
-    </main>
-    </>
+      )}
+    </div>
   );
 };
 

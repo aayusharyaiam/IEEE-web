@@ -1,185 +1,118 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
+import { Menu, X } from 'lucide-react';
+
+const links = [
+  { name: 'Home', path: '/' },
+  { name: 'Committee', path: '/members' },
+  { name: 'Events', path: '/events' },
+  { name: 'Abhivyakti', path: '/abhivyakti' },
+  { name: 'Gallery', path: '/gallery' },
+  { name: 'Contact', path: '/contact' },
+];
+
+const JOIN_URL = 'https://www.ieee.org/membership/join';
 
 const Navbar = () => {
   const location = useLocation();
-  const navRef = useRef(null);
   const menuRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isDark, setIsDark] = useState(() => {
-    const stored = window.localStorage.getItem('ieee-theme');
-    return stored ? stored === 'dark' : true;
-  });
 
+  // Route changes can also come from browser history, so keep the overlay closed.
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    window.localStorage.setItem('ieee-theme', isDark ? 'dark' : 'light');
-  }, [isDark]);
-
-  // Close menu on route change
-  useEffect(() => {
-    // Route changes can also come from browser history, so keep the overlay closed.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsOpen(false);
   }, [location.pathname]);
 
-  // Animate menu open/close
   useEffect(() => {
-    if (!menuRef.current) return;
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      gsap.fromTo(menuRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: 'power2.out' }
-      );
-      gsap.fromTo('.mobile-link',
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.07, duration: 0.5, ease: 'power3.out', delay: 0.15 }
-      );
-      gsap.fromTo('.mobile-cta',
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', delay: 0.5 }
-      );
-      gsap.fromTo('.mobile-footer',
-        { opacity: 0 },
-        { opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.6 }
-      );
-    } else {
+    if (!isOpen) {
       document.body.style.overflow = '';
+      return undefined;
     }
-    return () => { document.body.style.overflow = ''; };
+    document.body.style.overflow = 'hidden';
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.mobile-link', { y: -8, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.04, duration: 0.35, ease: 'power2.out' });
+    }, menuRef);
+    const onKey = (e) => e.key === 'Escape' && setIsOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      ctx.revert();
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
-
-  const links = [
-    { name: 'Home', path: '/', icon: 'home' },
-    { name: 'Members', path: '/members', icon: 'groups' },
-    { name: 'Events', path: '/events', icon: 'event' },
-    { name: 'Abhivyakti', path: '/abhivyakti', icon: 'celebration' },
-    { name: 'Gallery', path: '/gallery', icon: 'photo_library' },
-    { name: 'Contact', path: '/contact', icon: 'mail' },
-  ];
-
-  useEffect(() => {
-    gsap.fromTo(navRef.current, 
-      { y: -100, opacity: 0 }, 
-      { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
-    );
-  }, []);
 
   return (
     <>
-      <nav ref={navRef} className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-surface-variant/50 shadow-sm selection:bg-tertiary selection:text-on-tertiary">
-        <div className="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
-          <Link to="/" className="text-xl font-bold tracking-tighter text-primary-fixed-dim">
-            IEEE BITP
+      <nav className="fixed top-0 inset-x-0 z-50 h-11 frosted-dark text-white" aria-label="Global">
+        <div className="mx-auto flex h-full max-w-[1024px] items-center justify-between px-4 md:px-6">
+          <Link to="/" className="text-[14px] font-semibold tracking-[-0.224px] text-white/90 hover:text-white" aria-label="IEEE BIT Patna home">
+            IEEE <span className="font-normal text-white/60">BIT Patna</span>
           </Link>
-          
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
-            {links.map((link) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <Link
-                  key={link.name}
+
+          <ul className="hidden md:flex items-center gap-8">
+            {links.map((link) => (
+              <li key={link.path}>
+                <NavLink
                   to={link.path}
-                  className={
-                    isActive
-                      ? "text-tertiary relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px] after:bg-tertiary font-medium text-sm tracking-wider"
-                      : "text-on-surface/70 hover:text-on-surface transition-colors font-medium text-sm tracking-wider"
+                  end={link.path === '/'}
+                  className={({ isActive }) =>
+                    `t-fine transition-colors ${isActive ? 'text-white' : 'text-white/70 hover:text-white'}`
                   }
                 >
                   {link.name}
-                </Link>
-              );
-            })}
-          </div>
-          
-          <div className="hidden md:flex items-center gap-4">
-            <button onClick={() => setIsDark(!isDark)} className="p-2 rounded-full border border-outline-variant/20 text-on-surface hover:bg-surface-container-high transition-colors flex items-center justify-center">
-              <span className="material-symbols-outlined text-[20px]">{isDark ? 'light_mode' : 'dark_mode'}</span>
-            </button>
-            <a href="https://www.ieee.org/membership/join" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-primary to-secondary text-on-primary px-8 py-2.5 rounded-xl font-semibold text-sm hover:scale-95 transition-all duration-300">
-              Join Us
-            </a>
-          </div>
+                </NavLink>
+              </li>
+            ))}
+          </ul>
 
-          {/* Mobile Menu Button Group */}
-          <div className="md:hidden flex items-center justify-center gap-2">
-            <button onClick={() => setIsDark(!isDark)} className="p-2 rounded-full border border-outline-variant/20 text-on-surface flex items-center justify-center">
-              <span className="material-symbols-outlined text-[20px]">{isDark ? 'light_mode' : 'dark_mode'}</span>
-            </button>
-            <button 
-              className="text-on-surface p-2 focus:outline-none flex items-center justify-center z-[60]"
-              onClick={() => setIsOpen(!isOpen)}
+          <div className="flex items-center gap-2">
+            <a href={JOIN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm !py-1 !px-3 !text-[12px]">
+              Join IEEE
+            </a>
+            <button
+              type="button"
+              className="md:hidden -mr-2 flex h-11 w-11 items-center justify-center text-white/80"
+              onClick={() => setIsOpen((v) => !v)}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
             >
-              <span className="material-symbols-outlined text-3xl">
-                {isOpen ? 'close' : 'menu'}
-              </span>
+              {isOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Full-Page Mobile Menu Overlay */}
       {isOpen && (
         <div
+          id="mobile-menu"
           ref={menuRef}
-          className="md:hidden fixed inset-0 z-40 bg-background/95 backdrop-blur-2xl flex flex-col opacity-0"
+          className="md:hidden fixed inset-0 top-11 z-40 bg-black text-white overflow-y-auto animate-[fade-in_0.2s_ease-out]"
+          data-lenis-prevent
         >
-          {/* Decorative glow */}
-          <div className="absolute top-[-20%] right-[-20%] w-[400px] h-[400px] bg-[radial-gradient(circle,_var(--color-tertiary-container-val)_0%,_transparent_70%)] opacity-20 pointer-events-none"></div>
-          <div className="absolute bottom-[-10%] left-[-10%] w-[300px] h-[300px] bg-[radial-gradient(circle,_var(--color-secondary-container-val)_0%,_transparent_70%)] opacity-15 pointer-events-none"></div>
-
-          {/* Nav links — top-left aligned */}
-          <div className="flex-1 flex flex-col items-start justify-start gap-5 px-8 pt-24">
-            {links.map((link) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <Link
-                  key={link.name}
+          <ul className="px-10 pt-8 pb-12 space-y-1">
+            {links.map((link) => (
+              <li key={link.path} className="mobile-link">
+                <NavLink
                   to={link.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`mobile-link flex items-center gap-4 text-3xl font-bold tracking-tight transition-all duration-300 ${
-                    isActive
-                      ? 'text-tertiary scale-105'
-                      : 'text-on-surface hover:text-tertiary hover:translate-x-2'
-                  }`}
+                  end={link.path === '/'}
+                  className={({ isActive }) =>
+                    `block py-1.5 t-display-md !text-[28px] ${isActive ? 'text-white' : 'text-white/75'}`
+                  }
                 >
-                  <span className="material-symbols-outlined text-2xl opacity-50">{link.icon}</span>
                   {link.name}
-                </Link>
-              );
-            })}
-
-            <a
-              href="https://www.ieee.org/membership/join"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mobile-cta mt-6 bg-gradient-to-r from-primary to-secondary text-on-primary px-12 py-4 rounded-xl font-bold text-lg text-center hover:scale-105 active:scale-95 transition-all"
-            >
-              Join IEEE
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+          <p className="mobile-link px-10 pb-10 t-caption text-white/50">
+            Built &amp; designed by{' '}
+            <a href="https://www.linkedin.com/in/aayusharyaiam/" target="_blank" rel="noopener noreferrer" className="text-primary-on-dark hover:underline">
+              Aayush Arya
             </a>
-          </div>
-
-          {/* Footer credit */}
-          <div className="mobile-footer pb-8 pt-4 text-center border-t border-outline-variant/10 mx-8">
-            <p className="text-on-surface-variant/50 text-sm">
-              built & designed by{' '}
-              <a
-                href="https://www.linkedin.com/in/aayusharyaiam/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-tertiary hover:underline font-medium"
-              >
-                Aayush Arya
-              </a>
-            </p>
-          </div>
+          </p>
         </div>
       )}
     </>

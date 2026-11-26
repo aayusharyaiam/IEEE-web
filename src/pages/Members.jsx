@@ -1,76 +1,122 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Plus } from 'lucide-react';
 import MemberCard from '../components/MemberCard';
 import ImageWithSkeleton from '../components/ImageWithSkeleton';
 import SEO from '../components/SEO';
+import { SectionHead, SplitText } from '../components/Reveal';
 import useReveal from '../hooks/useReveal';
 import { committee, currentTerm, facultyAdvisor, pastCommittees } from '../data/committee';
+
+/** One alumni term as a collapsible panel; content stays mounted so it animates open. */
+const AlumniGroup = ({ term, members, defaultOpen, index }) => {
+  const [open, setOpen] = useState(defaultOpen);
+  const panelId = `alumni-${term.replace(/[^0-9]/g, '')}`;
+
+  return (
+    <div className="border-b border-rule" data-reveal>
+      <h3>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="group flex w-full items-center gap-6 py-7 text-left"
+        >
+          <span className="label label-index w-10 shrink-0">[{String(index + 1).padStart(2, '0')}]</span>
+          <span className={`display-md flex-1 transition-[color,transform] duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-2 ${open ? 'text-copper italic' : ''}`}>
+            {term}
+          </span>
+          <span className="label hidden sm:block">{members.length} members</span>
+          <span
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ease-[var(--ease-out-expo)] ${
+              open ? 'rotate-45 border-ink bg-ink text-paper' : 'border-rule group-hover:border-ink'
+            }`}
+            aria-hidden="true"
+          >
+            <Plus size={18} strokeWidth={1.5} />
+          </span>
+        </button>
+      </h3>
+      <div
+        id={panelId}
+        className={`grid transition-[grid-template-rows] duration-700 ease-[var(--ease-out-expo)] ${open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}
+        inert={!open || undefined}
+      >
+        <div className="overflow-hidden">
+          <div className="grid grid-cols-2 gap-3 pb-10 sm:grid-cols-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5">
+            {members.map((member) => (
+              <MemberCard key={`${term}-${member.name}`} {...member} compact />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Members = () => {
   const pageRef = useReveal();
 
   return (
     <div ref={pageRef}>
-      <SEO
-        title="Executive Committee"
-        description={`Meet the ${currentTerm} executive committee, faculty advisor and alumni of IEEE Student Branch BIT Patna.`}
-        path="/members"
-      />
+      <SEO path="/members" />
 
-      {/* Hero */}
-      <section className="tile tile-light text-center">
-        <div className="mx-auto max-w-[980px]">
-          <p className="t-tagline text-ink-48" data-reveal>Executive Committee {currentTerm}</p>
-          <h1 className="t-hero mt-3" data-reveal data-reveal-delay="0.05">The people behind the branch.</h1>
-          <p className="t-body mx-auto mt-5 max-w-[640px] text-ink-80" data-reveal data-reveal-delay="0.1">
-            Meet the dedicated team at IEEE Student Branch BIT Patna. Engineering solutions, fostering community, and leading the digital frontier.
-          </p>
-        </div>
+      {/* Hero + current committee */}
+      <section className="section !pt-16 md:!pt-24">
+        <div className="wrap">
+          <p className="label" data-reveal><span className="label-index">[{currentTerm}]</span> Executive Committee</p>
+          <SplitText as="h1" className="display-xl mt-6 max-w-[14ch]">
+            The people behind <em>the branch.</em>
+          </SplitText>
+          <div className="mt-8 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
+            <p className="lede max-w-[52ch]" data-reveal data-reveal-delay="0.2">
+              Meet the dedicated team at IEEE Student Branch BIT Patna. Engineering solutions, fostering community, and leading the digital frontier.
+            </p>
+            <p className="label" data-reveal data-reveal-delay="0.3">Office order IEEE/13/10/26</p>
+          </div>
+          <div className="rule mt-12" data-rule="" aria-hidden="true" />
 
-        <div className="mx-auto mt-14 grid max-w-[1200px] grid-cols-2 gap-4 text-left sm:grid-cols-3 lg:grid-cols-5 lg:gap-5">
-          {committee.map((member) => (
-            <MemberCard key={member.name} {...member} />
-          ))}
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5" data-stagger>
+            {committee.map((member) => (
+              <MemberCard key={member.name} {...member} />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Faculty advisor */}
-      <section className="tile tile-parchment">
-        <div className="mx-auto grid max-w-[980px] items-center gap-10 md:grid-cols-[minmax(0,320px)_1fr] md:gap-16">
-          <div className="mx-auto w-full max-w-[320px] overflow-hidden rounded-lg aspect-[4/5]" data-reveal>
-            <ImageWithSkeleton src={facultyAdvisor.image} alt={`${facultyAdvisor.name}, ${facultyAdvisor.title}`} className="h-full w-full object-cover" loading="lazy" />
+      <section className="section bg-paper-2/60 border-y border-rule">
+        <div className="wrap grid items-center gap-12 md:grid-cols-[minmax(0,340px)_1fr] md:gap-20">
+          <div className="ticks mx-auto w-full max-w-[340px]">
+            <div className="aspect-[4/5] overflow-hidden rounded-[14px]" data-reveal="clip">
+              <ImageWithSkeleton src={facultyAdvisor.image} alt={`${facultyAdvisor.name}, ${facultyAdvisor.title}`} className="h-full w-full object-cover" loading="lazy" />
+            </div>
           </div>
-          <div className="text-center md:text-left" data-reveal data-reveal-delay="0.1">
-            <p className="eyebrow">Faculty Advisor</p>
-            <h2 className="t-display-lg mt-2">{facultyAdvisor.name}</h2>
-            <p className="t-lead-airy mt-3 text-ink-80">
+          <div>
+            <p className="label" data-reveal><span className="label-index">[01]</span> Faculty Advisor</p>
+            <SplitText as="h2" className="display-lg mt-5">{facultyAdvisor.name}</SplitText>
+            <p className="lede mt-5" data-reveal>
               {facultyAdvisor.role}
               <br />
-              {facultyAdvisor.title}
+              <span className="accent font-display">{facultyAdvisor.title}</span>
             </p>
           </div>
         </div>
       </section>
 
-      {/* Past committees */}
-      <section className="tile tile-dark on-dark">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="mx-auto max-w-[980px] text-center">
-            <h2 className="t-display-lg" data-reveal>Alumni</h2>
-            <p className="t-body mx-auto mt-4 max-w-[560px] text-body-muted" data-reveal>
+      {/* Alumni — most recent term first and open by default */}
+      <section className="section">
+        <div className="wrap">
+          <SectionHead index="02" label="Alumni" title={<>Those who laid <em>the foundation.</em></>}>
+            <p className="body max-w-[52ch]" data-reveal>
               Former executive committee members who laid the foundation of our student branch.
             </p>
+          </SectionHead>
+          <div className="mt-12 border-t border-rule">
+            {pastCommittees.map((group, i) => (
+              <AlumniGroup key={group.term} index={i} term={group.term} members={group.members} defaultOpen={i === 0} />
+            ))}
           </div>
-
-          {pastCommittees.map((group) => (
-            <div key={group.term} className="mt-14">
-              <h3 className="t-tagline mb-5 text-white" data-reveal>{group.term}</h3>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 md:gap-4">
-                {group.members.map((member) => (
-                  <MemberCard key={`${group.term}-${member.name}`} {...member} dark compact />
-                ))}
-              </div>
-            </div>
-          ))}
         </div>
       </section>
     </div>

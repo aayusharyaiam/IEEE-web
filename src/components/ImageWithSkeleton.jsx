@@ -5,10 +5,10 @@ export default function ImageWithSkeleton({ src, alt, className = '', wrapperCla
   const [failed, setFailed] = useState(false);
 
   return (
-    <div className={`relative h-full w-full overflow-hidden bg-parchment ${wrapperClassName}`}>
+    <div className={`relative h-full w-full overflow-hidden bg-paper-2 ${wrapperClassName}`}>
       {!loaded && !failed && <div className="skeleton absolute inset-0" aria-hidden="true" />}
       {failed ? (
-        <div className="flex h-full min-h-32 items-center justify-center px-4 text-center t-caption text-ink-48">Image unavailable</div>
+        <div className="flex h-full min-h-32 items-center justify-center px-4 text-center small text-ink-3">Image unavailable</div>
       ) : (
         <img
           {...props}

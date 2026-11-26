@@ -1,22 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ChevronRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import ImageWithSkeleton from '../components/ImageWithSkeleton';
+import MemberCard from '../components/MemberCard';
+import { BtnArrow, SectionHead, SplitText, Ticker } from '../components/Reveal';
 import useReveal from '../hooks/useReveal';
 import { committee, currentTerm, facultyAdvisor } from '../data/committee';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const JOIN_URL = 'https://www.ieee.org/membership/join';
 
 const stats = [
-  { value: 150, label: 'Active Members' },
-  { value: 45, label: 'Events Yearly' },
-  { value: 12, label: 'Projects Completed' },
-  { value: 20, label: 'Global Awards' },
+  { value: 150, suffix: '+', label: 'Active members' },
+  { value: 45, suffix: '+', label: 'Events every year' },
+  { value: 12, suffix: '+', label: 'Projects completed' },
+  { value: 20, suffix: '+', label: 'Global awards' },
+];
+
+const updates = [
+  { label: 'Committee', text: `The ${currentTerm} executive committee has been announced` },
+  { label: 'Abhivyakti', text: 'Abhivyakti 2026 concluded — thank you for three incredible days' },
+  { label: 'Membership', text: 'IEEE student membership is open — join the global community' },
+  { label: 'Workshops', text: 'PCB design and Linux + ML workshops, March 2026' },
 ];
 
 const events = [
@@ -45,151 +50,174 @@ const events = [
 
 const Home = () => {
   const pageRef = useReveal();
-  const statsRef = useRef(null);
-
-  // Count-up for the stats row.
-  useEffect(() => {
-    if (!statsRef.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const ctx = gsap.context(() => {
-      statsRef.current.querySelectorAll('[data-count]').forEach((el) => {
-        const target = Number(el.dataset.count);
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: target,
-          duration: 1.6,
-          ease: 'power1.out',
-          scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-          onUpdate: () => { el.textContent = `${Math.round(obj.val)}+`; },
-        });
-      });
-    }, statsRef);
-    return () => ctx.revert();
-  }, []);
 
   return (
     <div ref={pageRef}>
-      <SEO title="Student Branch" description="Discover IEEE BIT Patna's student community, leadership, events, and opportunities to innovate, learn, and grow." />
+      <SEO path="/" />
 
-      {/* 1. Hero — light tile */}
-      <section className="tile tile-light text-center !pb-0">
-        <div className="mx-auto max-w-[980px]">
-          <p className="t-tagline text-ink-48" data-reveal>Innovate. Educate. Empower.</p>
-          <h1 className="t-hero mt-3" data-reveal data-reveal-delay="0.05">
-            IEEE Student Branch
-            <br />
-            BIT Patna
-          </h1>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3" data-reveal data-reveal-delay="0.1">
-            <a href={JOIN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Explore Membership</a>
-            <Link to="/events" className="btn-secondary">View Events</Link>
+      {/* ── Hero ─────────────────────────────────────────── */}
+      <section className="relative overflow-hidden">
+        <div className="grid-paper pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,#000_40%,transparent)]" aria-hidden="true" />
+        <div className="wrap relative grid items-end gap-14 pt-14 pb-16 md:pt-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:pb-24">
+          <div>
+            <span className="tag" data-reveal>
+              <span className="pulse" aria-hidden="true" /> Since 23 Nov 2008 · BIT Mesra, Patna Campus
+            </span>
+            <SplitText as="h1" className="display-xl mt-8">
+              IEEE Student Branch <em>BIT Patna</em>
+            </SplitText>
+            <p className="lede mt-7 max-w-[46ch]" data-reveal data-reveal-delay="0.3">
+              Innovate. Educate. Empower. A student community for technology, leadership and professional growth.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-3" data-reveal data-reveal-delay="0.4">
+              <a href={JOIN_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                Explore membership <BtnArrow />
+              </a>
+              <Link to="/events" className="btn btn-ghost">View events</Link>
+            </div>
           </div>
-          <p className="t-body mx-auto mt-10 max-w-[720px] text-ink-80" data-reveal data-reveal-delay="0.15">
-            A canvas under which bright young minds, with diverse interests, get a common dream to take on the world with their technical skills, is how we would define the BIT PATNA IEEE Student Branch. The IEEE, Inc., USA operates through student branches spread all across the world. IEEE Student Chapter, BIT Patna was formed on 23 November 2008 with active cooperation from students and the effective guidance of faculty advisors. The chapter provides a local forum for members to meet and exchange views on technical, educational and professional interests.
-          </p>
-        </div>
-        <div className="mx-auto mt-14 max-w-[1200px]" data-reveal>
-          <div className="aspect-[21/9] overflow-hidden">
-            <ImageWithSkeleton src="/gallery/home3.jpeg" alt="IEEE BIT Patna members at a branch event" className="h-full w-full object-cover" fetchPriority="high" />
+
+          <div className="relative">
+            <figure className="ticks overflow-hidden rounded-[18px]" data-reveal="clip">
+              <div className="aspect-[4/5] overflow-hidden rounded-[18px] sm:aspect-[5/4] lg:aspect-square">
+                <div className="h-[115%] -mt-[7.5%]" data-parallax="0.12">
+                  <ImageWithSkeleton src="/gallery/home3.jpeg" alt="IEEE BIT Patna members at a branch event" className="h-full w-full object-cover" fetchPriority="high" />
+                </div>
+              </div>
+            </figure>
+            {/* Floating info card */}
+            <dl
+              className="absolute -bottom-8 left-4 right-4 grid grid-cols-3 divide-x divide-rule rounded-2xl border border-rule bg-card/95 p-4 shadow-[0_24px_50px_-30px_rgba(21,23,28,0.45)] backdrop-blur sm:left-auto sm:right-6 sm:w-[400px] lg:-left-10 lg:right-auto"
+              data-reveal
+              data-reveal-delay="0.6"
+            >
+              {[
+                ['Founded', '2008'],
+                ['Members', '150+'],
+                ['Term', currentTerm.replace(/^20(\d\d)–20(\d\d)$/, '’$1–’$2')],
+              ].map(([k, v]) => (
+                <div key={k} className="flex flex-col-reverse px-3 first:pl-1">
+                  <dt className="label !text-[10px]">{k}</dt>
+                  <dd className="whitespace-nowrap font-display text-[24px] leading-tight">{v}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
 
-      {/* 2. Vision & Mission — dark tile */}
-      <section className="tile tile-dark on-dark">
-        <div className="mx-auto grid max-w-[980px] gap-14 md:grid-cols-2 md:gap-16">
-          <div data-reveal>
-            <p className="eyebrow">Vision</p>
-            <h2 className="t-display-lg mt-2">Technology for global prosperity.</h2>
-            <p className="t-body mt-5 text-body-muted">
+      {/* ── Live ticker ──────────────────────────────────── */}
+      <div className="mt-8 border-y border-rule bg-card py-4 lg:mt-0">
+        <Ticker items={updates} />
+      </div>
+
+      {/* ── About ────────────────────────────────────────── */}
+      <section className="section">
+        <div className="wrap">
+          <SectionHead index="01" label="About the branch" title={<>A canvas for bright <em>young minds.</em></>} />
+          <div className="mt-14 grid gap-14 lg:grid-cols-[1.4fr_1fr] lg:gap-20">
+            <p className="lede !text-[clamp(18px,1.7vw,22px)] !leading-[1.65] text-ink" data-reveal>
+              A canvas under which bright young minds, with diverse interests, get a common dream to take on the world with their technical skills, is how we would define the BIT PATNA IEEE Student Branch. The IEEE, Inc., USA operates through student branches spread all across the world. IEEE Student Chapter, BIT Patna was formed on 23 November 2008 with active cooperation from students and the effective guidance of faculty advisors. The chapter provides a local forum for members to meet and exchange views on technical, educational and professional interests.
+            </p>
+            <dl className="grid grid-cols-2 self-start border-l border-t border-rule" data-stagger>
+              {stats.map((s) => (
+                <div key={s.label} className="flex flex-col-reverse border-b border-r border-rule p-6">
+                  <dt className="label mt-2">{s.label}</dt>
+                  <dd className="font-display text-[clamp(40px,4.5vw,56px)] leading-none tracking-tight" data-count={s.value} data-suffix={s.suffix}>
+                    {s.value}{s.suffix}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Vision · Mission · IEEE ──────────────────────── */}
+      <section className="section-tight pt-0">
+        <div className="wrap grid gap-4 md:grid-cols-3" data-stagger>
+          <article className="group flex min-h-[360px] flex-col rounded-[18px] bg-blue p-8 text-paper transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="label !text-paper/60">Vision</span>
+              <span className="label !text-paper/60">01</span>
+            </div>
+            <h3 className="mt-auto font-display text-[30px] leading-[1.1] tracking-tight">Technology for global <em className="font-light">prosperity.</em></h3>
+            <p className="mt-4 small leading-relaxed text-paper/80">
               To promote global prosperity by stimulating technology innovation, enabling members' careers, and promoting the global community. IEEE is, and remains, firmly committed to diversity, equity, and inclusion.
             </p>
-          </div>
-          <div data-reveal data-reveal-delay="0.1">
-            <p className="eyebrow">Mission</p>
-            <h2 className="t-display-lg mt-2">Knowledge for humanity.</h2>
-            <p className="t-body mt-5 text-body-muted">
+          </article>
+          <article className="group card flex min-h-[360px] flex-col !rounded-[18px] p-8 transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5">
+            <div className="flex items-center justify-between">
+              <span className="label">Mission</span>
+              <span className="label label-index">02</span>
+            </div>
+            <h3 className="mt-auto font-display text-[30px] leading-[1.1] tracking-tight">Knowledge for <em className="font-light text-copper">humanity.</em></h3>
+            <p className="mt-4 small leading-relaxed text-ink-2">
               The IEEE encourages the engineering process of producing, developing, integrating, sharing, and using knowledge in electro and information technologies and sciences for the benefit of humanity and the profession.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. About IEEE — parchment tile */}
-      <section className="tile tile-parchment">
-        <div className="mx-auto grid max-w-[1100px] items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div data-reveal>
-            <h2 className="t-display-lg">About IEEE</h2>
-            <p className="t-lead-airy mt-5 text-ink">
-              IEEE is the world's largest technical professional organization dedicated to advancing technology for the benefit of humanity.
-            </p>
-            <p className="t-body mt-5 text-ink-80">
-              IEEE and its members inspire a global community to innovate for a better tomorrow through its more than 4,23,000 members in over 160 countries, and its highly cited publications, conferences, technology standards, and professional and educational activities. IEEE is the trusted "voice" for engineering, computing, and technology information around the globe.
-            </p>
-            <a href="https://www.ieee.org/about" target="_blank" rel="noopener noreferrer" className="link mt-6">
-              Learn more about IEEE <ChevronRight size={16} strokeWidth={2} />
-            </a>
-          </div>
-          <div className="aspect-[4/3] overflow-hidden rounded-lg shadow-product" data-reveal data-reveal-delay="0.1">
-            <ImageWithSkeleton src="/gallery/home2.jpeg" alt="Students at an IEEE BIT Patna session" className="h-full w-full object-cover" loading="lazy" />
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Stats — light tile */}
-      <section ref={statsRef} className="tile tile-light">
-        <dl className="mx-auto grid max-w-[980px] grid-cols-2 gap-y-12 text-center md:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse" data-reveal>
-              <dt className="t-caption mt-1 text-ink-48">{s.label}</dt>
-              <dd className="t-hero !text-[48px] md:!text-[56px]" data-count={s.value}>{s.value}+</dd>
+          </article>
+          <a
+            href="https://www.ieee.org/about"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex min-h-[360px] flex-col rounded-[18px] bg-copper-soft p-8 transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1.5"
+          >
+            <div className="flex items-center justify-between">
+              <span className="label">About IEEE</span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/20 transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:rotate-45 group-hover:border-ink group-hover:bg-ink group-hover:text-paper">
+                <ArrowUpRight size={16} strokeWidth={1.75} />
+              </span>
             </div>
-          ))}
-        </dl>
+            <h3 className="mt-auto font-display text-[30px] leading-[1.1] tracking-tight">The world's largest technical <em className="font-light text-copper">community.</em></h3>
+            <p className="mt-4 small leading-relaxed text-ink-2">
+              IEEE and its members inspire a global community to innovate for a better tomorrow through its more than 4,23,000 members in over 160 countries, and its highly cited publications, conferences, technology standards, and professional and educational activities.
+            </p>
+          </a>
+        </div>
       </section>
 
-      {/* 5. New committee — parchment tile */}
-      <section className="tile tile-parchment text-center">
-        <div className="mx-auto max-w-[980px]">
-          <p className="eyebrow" data-reveal>Executive Committee {currentTerm}</p>
-          <h2 className="t-display-lg mt-2" data-reveal>Meet the new team.</h2>
-          <p className="t-body mx-auto mt-4 max-w-[560px] text-ink-80" data-reveal>
-            Appointed by the Branch Counsellor, {facultyAdvisor.name}, to lead the branch through the {currentTerm} session.
-          </p>
-          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5" data-reveal>
+      {/* ── New committee ────────────────────────────────── */}
+      <section className="section border-t border-rule">
+        <div className="wrap">
+          <SectionHead index="02" label={`Executive committee ${currentTerm}`} title={<>Meet the <em>new</em> team.</>}>
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <p className="body max-w-[52ch]" data-reveal>
+                Appointed by the Branch Counsellor, {facultyAdvisor.name}, to lead the branch through the {currentTerm} session.
+              </p>
+              <Link to="/members" className="link-draw" data-reveal>
+                Full committee <ArrowRight size={16} strokeWidth={1.75} />
+              </Link>
+            </div>
+          </SectionHead>
+          <div className="no-scrollbar -mx-6 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0 lg:grid-cols-5" data-stagger>
             {committee.map((m) => (
-              <li key={m.name} className="card !p-5 text-left">
-                <p className="t-caption text-ink-48">{m.role}</p>
-                <p className="t-body-strong mt-1">{m.name}</p>
-              </li>
+              <div key={m.name} className="w-[68%] shrink-0 snap-start sm:w-[42%] md:w-auto">
+                <MemberCard {...m} />
+              </div>
             ))}
-          </ul>
-          <div className="mt-8" data-reveal>
-            <Link to="/members" className="link">Meet the committee <ChevronRight size={16} strokeWidth={2} /></Link>
           </div>
         </div>
       </section>
 
-      {/* 6. Events — light tile with utility cards */}
-      <section className="tile tile-light">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
-            <div>
-              <p className="eyebrow">Latest Happenings</p>
-              <h2 className="t-display-lg mt-2">Events</h2>
-            </div>
-            <Link to="/events" className="link">View all events <ChevronRight size={16} strokeWidth={2} /></Link>
-          </div>
-          <div className="no-scrollbar -mx-[22px] mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[22px] pb-4 md:mx-0 md:grid md:grid-cols-3 md:overflow-visible md:px-0">
-            {events.map((ev) => (
-              <article key={ev.title} className="card flex min-w-[280px] snap-start flex-col !p-0 overflow-hidden" data-reveal>
-                <div className="aspect-[16/10] overflow-hidden">
+      {/* ── Events ───────────────────────────────────────── */}
+      <section className="section bg-paper-2/60">
+        <div className="wrap">
+          <SectionHead index="03" label="Latest happenings" title={<>Built, tested, <em>shared.</em></>}>
+            <Link to="/events" className="link-draw justify-self-start" data-reveal>
+              All events <ArrowRight size={16} strokeWidth={1.75} />
+            </Link>
+          </SectionHead>
+          <div className="mt-12 grid gap-5 md:grid-cols-3" data-stagger>
+            {events.map((ev, i) => (
+              <article key={ev.title} className="group card card-hover flex flex-col overflow-hidden">
+                <div className="zoom-frame relative aspect-[4/3]">
                   <ImageWithSkeleton src={ev.image} alt={ev.title} className="h-full w-full object-cover" loading="lazy" />
+                  <span className="tag absolute left-4 top-4 !bg-paper/90 backdrop-blur">{ev.tag}</span>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
-                  <p className="t-caption-strong text-ink-48">{ev.tag}</p>
-                  <h3 className="t-tagline mt-1">{ev.title}</h3>
-                  <p className="t-caption mt-1 text-ink-48">{ev.meta}</p>
-                  <p className="t-body mt-3 text-ink-80">{ev.desc}</p>
+                  <p className="label"><span className="label-index">[0{i + 1}]</span> {ev.meta}</p>
+                  <h3 className="display-sm mt-3">{ev.title}</h3>
+                  <p className="body mt-3 small">{ev.desc}</p>
                 </div>
               </article>
             ))}
@@ -197,72 +225,79 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 7. Gallery — dark tile */}
-      <section className="tile tile-dark-2 on-dark">
-        <div className="mx-auto max-w-[1200px]">
-          <div className="text-center" data-reveal>
-            <p className="eyebrow">Visual Journey</p>
-            <h2 className="t-display-lg mt-2">Life at IEEE BITP</h2>
+      {/* ── Gallery ──────────────────────────────────────── */}
+      <section className="section">
+        <div className="wrap">
+          <SectionHead index="04" label="Visual journey" title={<>Life at <em>IEEE BITP.</em></>} />
+          <div className="mt-12 grid grid-cols-2 gap-3 md:auto-rows-[260px] md:grid-cols-4 md:gap-4">
+            {[
+              { src: '/gallery/poster.jpeg', alt: 'Annual Technical Summit', cls: 'col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto' },
+              { src: '/gallery/home2.jpeg', alt: 'Students at an IEEE BIT Patna session', cls: 'aspect-square md:aspect-auto' },
+              { src: '/gallery/home1.jpeg', alt: 'IEEE BIT Patna event', cls: 'aspect-square md:aspect-auto' },
+              { src: '/gallery/home3.jpeg', alt: 'Student Membership Drive', cls: 'col-span-2 aspect-[2/1] md:aspect-auto' },
+            ].map((img, i) => (
+              <figure key={img.src + i} className={`group zoom-frame overflow-hidden rounded-[14px] ${img.cls}`} data-reveal="clip" data-reveal-delay={i * 0.08}>
+                <ImageWithSkeleton src={img.src} alt={img.alt} className="h-full w-full object-cover" loading="lazy" />
+              </figure>
+            ))}
           </div>
-          <div className="mt-12 grid grid-cols-2 gap-3 md:auto-rows-[240px] md:grid-cols-4 md:gap-4" data-reveal>
-            <figure className="col-span-2 aspect-[4/3] overflow-hidden rounded-lg md:row-span-2 md:aspect-auto">
-              <ImageWithSkeleton src="/gallery/poster.jpeg" alt="Annual Technical Summit" className="h-full w-full object-cover" loading="lazy" />
-            </figure>
-            <figure className="aspect-square overflow-hidden rounded-lg md:aspect-auto">
-              <ImageWithSkeleton src="/gallery/home2.jpeg" alt="IEEE BIT Patna event" className="h-full w-full object-cover" loading="lazy" />
-            </figure>
-            <figure className="aspect-square overflow-hidden rounded-lg md:aspect-auto">
-              <ImageWithSkeleton src="/gallery/home1.jpeg" alt="IEEE BIT Patna event" className="h-full w-full object-cover" loading="lazy" />
-            </figure>
-            <figure className="col-span-2 aspect-[2/1] overflow-hidden rounded-lg md:aspect-auto">
-              <ImageWithSkeleton src="/gallery/home3.jpeg" alt="Student Membership Drive" className="h-full w-full object-cover" loading="lazy" />
-            </figure>
-          </div>
-          <div className="mt-10 text-center" data-reveal>
-            <Link to="/gallery" className="btn-secondary">Open the gallery</Link>
+          <div className="mt-10 flex justify-center" data-reveal>
+            <Link to="/gallery" className="btn btn-ghost">Open the gallery <BtnArrow /></Link>
           </div>
         </div>
       </section>
 
-      {/* 8. Message from the Counsellor — light tile */}
-      <section className="tile tile-light">
-        <div className="mx-auto grid max-w-[1000px] items-start gap-12 md:grid-cols-[1fr_300px] md:gap-16">
-          <div data-reveal>
-            <p className="eyebrow">Message from the Counsellor</p>
-            <blockquote className="mt-4 space-y-5">
-              <p className="t-lead-airy text-ink">
-                As the branch counsellor of IEEE Student Branch BIT PATNA, I welcome you to IEEE family. IEEE is the world's largest technical community dedicated to advancing technology for the benefit of mankind.
-              </p>
-              <p className="t-body text-ink-80">
-                IEEE Student Branch promise to promote its preeminence among students in associated fields and ensure a smooth transition into an able and qualified engineer of tomorrow.
-              </p>
-              <p className="t-body text-ink-80">
-                The student branch of BIT PATNA aims to organize various events that helps to enhance the overall growth and development of our students and we shall continue to work for the same. I wish all the IEEE members great success for their future endeavors.
-              </p>
-            </blockquote>
-          </div>
-          <figure data-reveal data-reveal-delay="0.1">
-            <div className="aspect-[4/5] overflow-hidden rounded-lg shadow-product">
-              <ImageWithSkeleton src={facultyAdvisor.image} alt={`${facultyAdvisor.name}, faculty advisor of IEEE BIT Patna`} className="h-full w-full object-cover" loading="lazy" />
+      {/* ── Counsellor's message ─────────────────────────── */}
+      <section className="section border-t border-rule">
+        <div className="wrap grid items-start gap-14 lg:grid-cols-[320px_1fr] lg:gap-20">
+          <figure data-reveal>
+            <div className="ticks">
+              <div className="aspect-[4/5] overflow-hidden rounded-[14px]" data-reveal="clip">
+                <ImageWithSkeleton src={facultyAdvisor.image} alt={`${facultyAdvisor.name}, faculty advisor of IEEE BIT Patna`} className="h-full w-full object-cover" loading="lazy" />
+              </div>
             </div>
             <figcaption className="mt-5">
-              <p className="t-body-strong">{facultyAdvisor.name}</p>
-              <p className="t-caption text-ink-48">Assistant Professor · IEEE SB Counsellor</p>
+              <p className="font-display text-[22px] leading-tight">{facultyAdvisor.name}</p>
+              <p className="label mt-1.5">Assistant Professor · IEEE SB Counsellor</p>
             </figcaption>
           </figure>
+          <div>
+            <p className="label" data-reveal><span className="label-index">[05]</span> Message from the Counsellor</p>
+            <blockquote className="mt-8">
+              <SplitText as="p" className="display-md !leading-[1.25]">
+                <span className="text-copper">“</span>As the branch counsellor of IEEE Student Branch BIT PATNA, I welcome you to <em>IEEE family.</em>
+              </SplitText>
+              <div className="mt-8 grid gap-5 md:grid-cols-2" data-stagger>
+                <p className="body">
+                  IEEE is the world's largest technical community dedicated to advancing technology for the benefit of mankind. IEEE Student Branch promise to promote its preeminence among students in associated fields and ensure a smooth transition into an able and qualified engineer of tomorrow.
+                </p>
+                <p className="body">
+                  The student branch of BIT PATNA aims to organize various events that helps to enhance the overall growth and development of our students and we shall continue to work for the same. I wish all the IEEE members great success for their future endeavors.
+                </p>
+              </div>
+            </blockquote>
+          </div>
         </div>
       </section>
 
-      {/* 9. CTA — dark tile */}
-      <section className="tile tile-dark-3 on-dark text-center">
-        <div className="mx-auto max-w-[760px]" data-reveal>
-          <h2 className="t-hero">Ready to engineer the future?</h2>
-          <p className="t-body mx-auto mt-5 max-w-[560px] text-body-muted">
-            Join IEEE today and gain access to unparalleled resources, global networking, and opportunities to lead.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href={JOIN_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Become a Member Now</a>
-            <Link to="/contact" className="btn-secondary">Contact us</Link>
+      {/* ── CTA ──────────────────────────────────────────── */}
+      <section className="px-3 pb-3 md:px-4 md:pb-4">
+        <div className="relative overflow-hidden rounded-[24px] bg-night text-paper">
+          <div className="grid-paper pointer-events-none absolute inset-0 opacity-[0.08] invert" aria-hidden="true" />
+          <div className="wrap relative py-24 text-center md:py-32">
+            <p className="label !text-copper" data-reveal>Join the network</p>
+            <SplitText as="h2" className="display-lg mx-auto mt-6 max-w-[16ch] !text-paper">
+              Ready to engineer the <em>future?</em>
+            </SplitText>
+            <p className="lede mx-auto mt-6 max-w-[48ch] !text-paper/70" data-reveal>
+              Join IEEE today and gain access to unparalleled resources, global networking, and opportunities to lead.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-3" data-reveal>
+              <a href={JOIN_URL} target="_blank" rel="noopener noreferrer" className="btn btn-light">
+                Become a member <BtnArrow />
+              </a>
+              <Link to="/contact" className="btn btn-outline-light">Contact us</Link>
+            </div>
           </div>
         </div>
       </section>

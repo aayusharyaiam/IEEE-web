@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ArrowUpRight, Mail } from 'lucide-react';
 import ImageWithSkeleton from './ImageWithSkeleton';
 import { BRANCH_EMAIL, BRANCH_LINKEDIN } from '../data/committee';
 
@@ -12,39 +12,60 @@ const initials = (name) =>
     .join('');
 
 /**
- * Utility card: 18px radius, hairline border, 1:1-ish portrait with an 8px
- * inner radius, name in body-strong, role in caption, text links below.
- * `dark` switches to the near-black tile variant used for past committees.
+ * Portrait card: name and role sit on a soft gradient over the photo.
+ * Hover lifts the card, zooms the photo and slides the contact links up.
+ * Members without a photo get an italic serif monogram.
+ * `compact` is the smaller alumni variant without contact links.
  */
-const MemberCard = ({ name, role, image, linkedin, email, dark = false, compact = false }) => {
+const MemberCard = ({ name, role, image, linkedin, email, compact = false }) => {
   const linkedinUrl = linkedin || BRANCH_LINKEDIN;
   const emailAddress = email || BRANCH_EMAIL;
+  const chip = image ? 'bg-paper/15 hover:bg-paper hover:text-ink' : 'bg-ink/5 hover:bg-ink hover:text-paper';
 
   return (
-    <article className={`${dark ? 'card-dark on-dark' : 'card'} flex h-full flex-col ${compact ? '!p-4' : ''}`} data-reveal>
-      <div className={`aspect-[4/5] overflow-hidden rounded-sm ${dark ? 'bg-tile-3' : 'bg-parchment'}`}>
+    <article className="group card card-hover overflow-hidden">
+      <div className="zoom-frame relative aspect-[4/5] bg-paper-2">
         {image ? (
           <ImageWithSkeleton src={image} alt={`${name}, ${role}`} className="h-full w-full object-cover" loading="lazy" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center" aria-hidden="true">
-            <span className={`t-display-lg ${dark ? 'text-white/25' : 'text-ink-48/50'}`}>{initials(name)}</span>
+          <div className="grid-paper flex h-full w-full items-center justify-center pb-16" aria-hidden="true">
+            <span className={`font-display italic font-light text-ink/20 transition-colors duration-500 group-hover:text-copper ${compact ? 'text-[56px]' : 'text-[80px]'}`}>
+              {initials(name)}
+            </span>
           </div>
         )}
-      </div>
 
-      <div className="mt-4 flex flex-1 flex-col">
-        <p className={`t-caption ${dark ? 'text-body-muted' : 'text-ink-48'}`}>{role}</p>
-        <h3 className={`${compact ? 't-caption-strong' : 't-body-strong'} mt-0.5`}>{name}</h3>
-        {!compact && (
-          <div className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-3 t-caption">
-            <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" className="link" aria-label={`${name} on LinkedIn`}>
-              LinkedIn <ChevronRight size={12} strokeWidth={2} />
-            </a>
-            <a href={`mailto:${emailAddress}`} className="link" aria-label={`Email ${name}`}>
-              Email <ChevronRight size={12} strokeWidth={2} />
-            </a>
-          </div>
-        )}
+        <div
+          className={`absolute inset-x-0 bottom-0 ${image ? 'bg-gradient-to-t from-night/85 via-night/40 to-transparent text-paper' : 'text-ink'} ${compact ? 'p-4 pt-12' : 'p-5 pt-16'}`}
+        >
+          <p className={`label ${image ? '!text-paper/70' : ''} ${compact ? '!text-[10px]' : ''}`}>{role}</p>
+          <h3 className={`mt-1.5 font-display tracking-tight leading-tight ${compact ? 'text-[17px]' : 'text-[22px]'}`}>{name}</h3>
+
+          {!compact && (
+            <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[var(--ease-out-expo)] group-hover:grid-rows-[1fr] group-focus-within:grid-rows-[1fr] [@media(hover:none)]:grid-rows-[1fr]">
+              <div className="overflow-hidden">
+                <div className="flex gap-2 pt-3">
+                  <a
+                    href={linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[12px] font-medium backdrop-blur transition-colors ${chip}`}
+                    aria-label={`${name} on LinkedIn`}
+                  >
+                    LinkedIn <ArrowUpRight size={12} strokeWidth={2} />
+                  </a>
+                  <a
+                    href={`mailto:${emailAddress}`}
+                    className={`inline-flex items-center rounded-full px-2.5 py-1.5 backdrop-blur transition-colors ${chip}`}
+                    aria-label={`Email ${name}`}
+                  >
+                    <Mail size={13} strokeWidth={2} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </article>
   );

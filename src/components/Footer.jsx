@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import { BRANCH_EMAIL, BRANCH_LINKEDIN } from '../data/committee';
 
 const columns = [
@@ -11,6 +12,7 @@ const columns = [
       { label: 'Events', to: '/events' },
       { label: 'Abhivyakti', to: '/abhivyakti' },
       { label: 'Gallery', to: '/gallery' },
+      { label: 'Contact', to: '/contact' },
     ],
   },
   {
@@ -26,51 +28,73 @@ const columns = [
     links: [
       { label: 'LinkedIn', href: BRANCH_LINKEDIN },
       { label: 'Instagram', href: 'https://www.instagram.com/ieee_bitpatna/' },
-      { label: 'Contact Us', to: '/contact' },
+      { label: 'Email', href: `mailto:${BRANCH_EMAIL}` },
     ],
   },
 ];
 
-const Footer = () => (
-  <footer className="bg-parchment text-ink-80">
-    <div className="mx-auto max-w-[980px] px-5 pt-16 pb-10 md:px-6">
-      <p className="t-fine text-ink-48 pb-5 border-b border-hairline">
-        IEEE Student Branch, Birla Institute of Technology, Off Campus Patna. A local forum for members to meet and exchange views on technical, educational and professional interests.
-      </p>
+const FooterLink = ({ to, href, children }) => {
+  const cls = 'group inline-flex items-center gap-1.5 text-paper/70 transition-colors hover:text-paper';
+  const arrow = (
+    <ArrowUpRight size={13} strokeWidth={1.75} className="-translate-x-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" aria-hidden="true" />
+  );
+  if (to) return <Link to={to} className={cls}>{children}</Link>;
+  const external = href.startsWith('http');
+  return (
+    <a href={href} className={cls} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+      {children}
+      {external && arrow}
+    </a>
+  );
+};
 
-      <div className="grid grid-cols-2 gap-x-6 gap-y-8 py-8 md:grid-cols-4">
+const Footer = () => (
+  <footer className="relative overflow-hidden bg-night text-paper">
+    <div className="wrap pt-20 pb-10">
+      <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        <div>
+          <p className="label !text-copper">IEEE Student Branch · BIT Mesra, Patna Campus</p>
+          <p className="display-md mt-5 max-w-[16ch] !text-paper">
+            Advancing technology <em>for humanity.</em>
+          </p>
+          <address className="mt-8 not-italic small leading-relaxed text-paper/60">
+            BIT Patna Campus, Near J.P.N. Intl. Airport
+            <br />
+            Patna, Bihar 800014
+            <br />
+            <a href={`mailto:${BRANCH_EMAIL}`} className="text-paper/80 underline decoration-paper/30 underline-offset-4 hover:decoration-paper">
+              {BRANCH_EMAIL}
+            </a>
+          </address>
+        </div>
+
         {columns.map((col) => (
-          <div key={col.heading}>
-            <h2 className="t-caption-strong text-ink mb-2">{col.heading}</h2>
-            <ul className="t-fine leading-[2.2]">
+          <nav key={col.heading} aria-label={col.heading}>
+            <h2 className="label !text-paper/45">{col.heading}</h2>
+            <ul className="mt-5 space-y-3 small">
               {col.links.map((l) => (
                 <li key={l.label}>
-                  {l.to ? (
-                    <Link to={l.to} className="hover:underline">{l.label}</Link>
-                  ) : (
-                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="hover:underline">{l.label}</a>
-                  )}
+                  <FooterLink to={l.to} href={l.href}>{l.label}</FooterLink>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         ))}
-        <div>
-          <h2 className="t-caption-strong text-ink mb-2">Visit</h2>
-          <address className="t-fine not-italic leading-[1.9]">
-            BIT Patna Campus<br />
-            Near J.P.N. Intl. Airport<br />
-            Patna, Bihar 800014<br />
-            <a href={`mailto:${BRANCH_EMAIL}`} className="hover:underline">{BRANCH_EMAIL}</a>
-          </address>
-        </div>
       </div>
 
-      <div className="flex flex-col gap-2 border-t border-hairline pt-5 md:flex-row md:items-center md:justify-between">
-        <p className="t-fine text-ink-48">© {new Date().getFullYear()} IEEE Student Branch BIT Patna. Engineering the Future.</p>
-        <p className="t-fine text-ink-48">
-          Made by{' '}
-          <a href="https://www.linkedin.com/in/aayusharyaiam/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+      {/* Oversized wordmark */}
+      <p
+        className="pointer-events-none mt-20 select-none whitespace-nowrap font-display text-[clamp(64px,15vw,220px)] italic font-light leading-[0.8] tracking-[-0.04em] text-paper/[0.06]"
+        aria-hidden="true"
+      >
+        IEEE BIT Patna
+      </p>
+
+      <div className="mt-6 flex flex-col gap-3 border-t border-paper/10 pt-6 md:flex-row md:items-center md:justify-between">
+        <p className="label !text-paper/40">© {new Date().getFullYear()} IEEE Student Branch BIT Patna</p>
+        <p className="label !text-paper/40">
+          Designed &amp; built by{' '}
+          <a href="https://www.linkedin.com/in/aayusharyaiam/" target="_blank" rel="noopener noreferrer" className="!text-paper/80 hover:!text-copper">
             Aayush Arya
           </a>
         </p>

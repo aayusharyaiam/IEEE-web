@@ -26,7 +26,7 @@ export const committee = [
     email: 'aayush10738@gmail.com',
   },
   { name: 'Sunny Singh', role: 'Treasurer', image: '', linkedin: '', email: '' },
-  { name: 'Krish Agarwal', role: 'Webmaster', image: '', linkedin: '', email: '' },
+  { name: 'Krish Agarwal', role: 'Webmaster', image: '/members/krish-agarwal.jpeg', linkedin: '', email: '' },
 ];
 
 export const facultyAdvisor = {

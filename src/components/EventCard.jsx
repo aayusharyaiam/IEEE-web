@@ -1,29 +1,54 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const statusLabel = { live: 'Live now', upcoming: 'Upcoming', past: 'Concluded' };
 
-/** One event as a full-width row inside a tile: copy on one side, a quiet meta column on the other. */
-const EventCard = ({ title, description, date, status, link, index }) => (
-  <article className="grid gap-6 border-t border-hairline py-10 md:grid-cols-[200px_1fr] md:gap-12" data-reveal>
-    <div>
-      <p className="t-caption-strong text-ink-48">{String(index + 1).padStart(2, '0')}</p>
-      {date && <p className="t-body mt-1">{date}</p>}
-      {status && (
-        <p className={`t-caption mt-1 ${status === 'live' ? 'text-primary' : 'text-ink-48'}`}>{statusLabel[status] ?? status}</p>
-      )}
-    </div>
-    <div>
-      <h3 className="t-display-md !leading-tight">{title}</h3>
-      <p className="t-body mt-3 max-w-[640px] text-ink-80 whitespace-pre-line">{description}</p>
-      {link && (
-        <Link to={link} className="link mt-4">
-          View details <ChevronRight size={16} strokeWidth={2} />
-        </Link>
-      )}
-    </div>
-  </article>
-);
+/**
+ * Event as a ledger row: index and date on the left, title and copy on the
+ * right. On hover the row tints, the title shifts and a copper bar grows in.
+ */
+const EventCard = ({ title, description, date, status, link, index }) => {
+  const body = (
+    <>
+      <span
+        className="absolute left-0 top-0 h-full w-[2px] origin-top scale-y-0 bg-copper transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-y-100"
+        aria-hidden="true"
+      />
+      <div className="flex items-start gap-6 md:block">
+        <p className="label label-index">[{String(index + 1).padStart(2, '0')}]</p>
+        <div className="md:mt-4">
+          {date && <p className="font-display text-[20px] leading-tight">{date}</p>}
+          {status && (
+            <p className="label mt-2 flex items-center gap-2">
+              <span className={`h-1.5 w-1.5 rounded-full ${status === 'past' ? 'bg-ink-3/50' : 'bg-copper'}`} aria-hidden="true" />
+              {statusLabel[status] ?? status}
+            </p>
+          )}
+        </div>
+      </div>
+      <div>
+        <h3 className="display-md transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-2">{title}</h3>
+        <p className="body mt-4 max-w-[62ch] whitespace-pre-line">{description}</p>
+      </div>
+      <div className="hidden md:flex md:justify-end">
+        {link && (
+          <span className="flex h-12 w-12 items-center justify-center rounded-full border border-rule transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:-rotate-45 group-hover:border-ink group-hover:bg-ink group-hover:text-paper">
+            <ArrowRight size={18} strokeWidth={1.5} />
+          </span>
+        )}
+      </div>
+    </>
+  );
+
+  const cls =
+    'group relative grid gap-6 border-t border-rule py-10 pl-5 pr-2 transition-colors duration-500 hover:bg-card md:grid-cols-[220px_1fr_64px] md:gap-10 md:py-12 md:pl-8';
+
+  return link ? (
+    <Link to={link} className={cls} aria-label={`${title} — view details`}>{body}</Link>
+  ) : (
+    <article className={cls}>{body}</article>
+  );
+};
 
 export default EventCard;

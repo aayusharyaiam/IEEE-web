@@ -4,16 +4,22 @@ The website for the **IEEE Student Branch at Birla Institute of Technology, Patn
 
 ## Design system
 
-The UI follows a restrained, photography-first design language, specified in a DESIGN.md token file (`apple.design.md`):
+An "engineering notebook" look, informed by the BIT Mesra conference sites (impact.bitmesra.ac.in, ivdc.bitmesra.ac.in) but with its own palette and type:
 
-- **One interactive colour.** Action Blue `#0066cc` is used for every link, pill CTA and focus ring. On dark tiles links switch to `#2997ff`.
-- **Alternating full-bleed tiles.** Pages are stacks of edge-to-edge sections in white `#ffffff`, parchment `#f5f5f7` and near-black (`#272729`, `#2a2a2c`, `#252527`). The colour change is the section divider: there are no borders or decorative gradients between sections.
-- **Type.** SF Pro on Apple devices, Inter everywhere else. Headlines are weight 600 with tight tracking, body text is **17px / 1.47**, and the weight ladder is 300 / 400 / 600 / 700 (no 500).
-- **Radius grammar.** Pills for actions, 18px for utility cards, 8px for small utility buttons and inline imagery, 0 for tiles.
-- **One shadow.** `3px 5px 30px rgba(0,0,0,.22)`, used only on photography that sits on a surface.
-- **Chrome.** A 44px translucent black global nav, a frosted sub-nav on Abhivyakti, a parchment footer, and `scale(0.95)` as the press state on every button.
+- **Palette.** Warm paper `#f4f1ea` with card `#fbfaf7` and hairline rules `#d8d1c2`; ink `#15171c`. IEEE blue `#00629b` is the action colour, copper `#c0652a` is the emphasis colour (accent words, indices, progress line), and night `#0c1b2a` is used for the closing CTA and footer.
+- **Type.** Fraunces (display, with an italic copper accent word per headline), Geist (UI and body), Geist Mono (`[01] — LABEL` annotations).
+- **Motifs.** Mono section indices on a hairline that draws in, corner "registration" ticks on framed photos, a faint engineering grid behind the hero and 404, a live-updates ticker.
+- **Micro-interactions.** Buttons fill from below and their arrow turns; nav labels roll; cards lift and their photos zoom; member cards reveal contact links on hover (always visible on touch); links draw an underline; alumni terms expand with an animated plus.
+- **Scroll motion** (`src/hooks/useReveal.js`, GSAP ScrollTrigger + Lenis): headlines rise word by word (`<SplitText>`), images unmask (`data-reveal="clip"`), rules draw (`data-rule`), groups stagger (`data-stagger`), the hero photo drifts (`data-parallax`) and stats count up (`data-count`). Everything is skipped for `prefers-reduced-motion`, and content is visible without JavaScript animation.
 
-Tokens and component classes (`.tile-*`, `.t-hero`, `.t-body`, `.btn-primary`, `.btn-secondary`, `.card`, `.field`, …) live in `src/index.css`. They are exposed to Tailwind through `@theme`, so utilities such as `bg-parchment`, `text-ink-48`, `text-primary` and `shadow-product` also work.
+Tokens and component classes (`.display-*`, `.lede`, `.label`, `.btn-*`, `.card`, `.tag`, `.field`, `.ticker`, …) live in `src/index.css` and are exposed to Tailwind through `@theme` (`bg-paper`, `text-copper`, `font-display`, …).
+
+## SEO
+
+- Titles and descriptions for every route live in `src/data/seo.js`. `<SEO path="/members" />` keeps the head in sync on client-side navigation.
+- `npm run build` runs `scripts/prerender.mjs` after Vite. It writes `members.html`, `events.html`, … with each route's own title, description, canonical, Open Graph and Twitter tags (served at `/members` etc. via `cleanUrls` in `vercel.json`), a `404.html` marked `noindex` (Vercel serves it with a real 404 status), `sitemap.xml` and `robots.txt`.
+- `index.html` carries Organization JSON-LD (injected from `src/data/seo.js` by a small Vite plugin) and a `<noscript>` fallback.
+- When you add a page, add it to `routes` in `src/data/seo.js` so it gets a title, a prerendered shell and a sitemap entry.
 
 ## Tech stack
 
@@ -27,22 +33,23 @@ Tokens and component classes (`.tile-*`, `.t-hero`, `.t-body`, `.btn-primary`, `
 
 ```
 src/
-├── data/committee.js        # Executive committee, faculty advisor, past committees
-├── hooks/useReveal.js       # Fade-up reveal for [data-reveal] elements (respects reduced motion)
+├── data/committee.js        # Executive committee, faculty advisor, past committees (newest first)
+├── data/seo.js              # Per-route titles/descriptions, site URL, Organization JSON-LD
+├── hooks/useReveal.js       # Scroll-triggered motion (reveal, split words, clip, rule, stagger, parallax, count)
 ├── components/
-│   ├── Navbar.jsx           # 44px global nav + full-screen mobile menu
-│   ├── Footer.jsx           # Parchment footer with link columns
-│   ├── MemberCard.jsx       # Utility card for committee members (light and dark variants)
-│   ├── EventCard.jsx        # Event row used on /events
+│   ├── Reveal.jsx           # SplitText, SectionHead, Ticker, BtnArrow
+│   ├── Navbar.jsx           # Nav with rolling labels, copper scroll-progress line, mobile menu
+│   ├── Footer.jsx           # Night footer with oversized wordmark
+│   ├── MemberCard.jsx       # Portrait card with hover-revealed contact links (compact variant for alumni)
+│   ├── EventCard.jsx        # Ledger-style event row used on /events
+│   ├── PageSkeleton.jsx     # Loading skeleton shown while a page chunk loads
 │   ├── ImageWithSkeleton.jsx
 │   └── SEO.jsx, SiteLoader.jsx, ScrollToTop.jsx, SmoothScroll.jsx, scrollManager.js
-└── pages/
-    ├── Home.jsx             # Hero, vision/mission, about, stats, new committee, events, gallery, counsellor, CTA
-    ├── Members.jsx          # Current committee, faculty advisor, alumni by term
-    ├── Events.jsx
-    ├── Abhivyakti.jsx       # Fest editions with a frosted year switcher
-    ├── Gallery.jsx
-    └── Contact.jsx
+├── pages/                   # Lazy-loaded route chunks
+│   ├── Home.jsx, Members.jsx (collapsible alumni, latest term open), Events.jsx
+│   ├── Abhivyakti.jsx, Gallery.jsx, Contact.jsx
+│   └── NotFound.jsx         # 404 page (noindex)
+scripts/prerender.mjs        # Post-build: per-route HTML, 404.html, sitemap.xml, robots.txt
 ```
 
 ## Updating the executive committee

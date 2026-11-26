@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import useReveal from '../hooks/useReveal';
+import { BtnArrow, SplitText } from '../components/Reveal';
 
 const Abhivyakti = () => {
   const [activeTab, setActiveTab] = useState('2026');
@@ -116,12 +117,12 @@ const Abhivyakti = () => {
 
   return (
     <div ref={pageRef}>
-      <SEO title={`Abhivyakti ${activeTab}`} description="Abhivyakti is IEEE BIT Patna's annual techno-cultural festival of innovation, competitions, and creativity." path="/abhivyakti" />
+      <SEO path="/abhivyakti" title={`Abhivyakti ${activeTab} — Techno-Cultural Fest`} />
 
-      {/* Frosted sub-nav: festival name + edition switcher */}
-      <div className="sticky top-11 z-30 frosted border-b border-black/[0.08]">
-        <div className="mx-auto flex h-[52px] max-w-[1024px] items-center gap-6 px-4 md:px-6">
-          <span className="t-tagline shrink-0">Abhivyakti</span>
+      {/* Edition switcher */}
+      <div className="sticky top-[72px] z-30 border-b border-rule bg-paper/85 backdrop-blur-md">
+        <div className="wrap flex h-14 items-center gap-6">
+          <span className="font-display text-[18px] italic shrink-0">Abhivyakti</span>
           <div className="no-scrollbar ml-auto flex items-center gap-1 overflow-x-auto" role="tablist" aria-label="Edition">
             {years.map((year) => (
               <button
@@ -130,8 +131,8 @@ const Abhivyakti = () => {
                 role="tab"
                 aria-selected={activeTab === year}
                 onClick={() => setActiveTab(year)}
-                className={`shrink-0 rounded-full px-3 py-1 t-caption transition-colors ${
-                  activeTab === year ? 'bg-ink text-white' : 'text-ink-80 hover:text-ink'
+                className={`relative shrink-0 rounded-full px-3.5 py-1.5 font-mono text-[12px] tracking-wider transition-colors duration-300 ${
+                  activeTab === year ? 'bg-ink text-paper' : 'text-ink-3 hover:bg-paper-2 hover:text-ink'
                 }`}
               >
                 {year}
@@ -141,52 +142,59 @@ const Abhivyakti = () => {
         </div>
       </div>
 
-      {/* Hero — dark tile for the flagship edition, light for the archive */}
-      <section className={`tile text-center ${isFlagship ? 'tile-black on-dark' : 'tile-light'}`}>
-        <div className="mx-auto max-w-[980px]">
-          <p className={`t-tagline ${isFlagship ? 'text-body-muted' : 'text-ink-48'}`} data-reveal>
+      {/* Hero */}
+      <section className="section !pt-16 md:!pt-24">
+        <div className="wrap">
+          <span className="tag" data-reveal>
+            <span className="h-1.5 w-1.5 rounded-full bg-ink-3/50" aria-hidden="true" />
             {currentData.dates} · {currentData.tagline}
-          </p>
-          <h1 className="t-hero mt-3" data-reveal data-reveal-delay="0.05">Abhivyakti {activeTab}</h1>
-          <p className={`t-body mx-auto mt-5 max-w-[680px] ${isFlagship ? 'text-body-muted' : 'text-ink-80'}`} data-reveal data-reveal-delay="0.1">
-            {currentData.description}
-          </p>
+          </span>
+          <SplitText as="h1" className="display-xl mt-7" key={activeTab}>
+            Abhivyakti <em>{activeTab}</em>
+          </SplitText>
+          <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+            <p className="lede max-w-[58ch]" data-reveal data-reveal-delay="0.2">{currentData.description}</p>
+            {isFlagship && (
+              <a href="https://linktr.ee/Abhivyakti_2k26" target="_blank" rel="noopener noreferrer" className="btn btn-ghost justify-self-start" data-reveal>
+                Abhivyakti 2026 links <BtnArrow />
+              </a>
+            )}
+          </div>
+
           {isFlagship && (
-            <>
-              <dl className="mx-auto mt-12 grid max-w-[640px] grid-cols-3 gap-6" data-reveal>
-                {[
-                  ['3', 'Days'],
-                  [String(currentData.events.length), 'Events'],
-                  ['1', 'Fest'],
-                ].map(([value, label]) => (
-                  <div key={label} className="flex flex-col-reverse">
-                    <dt className="t-caption text-body-muted">{label}</dt>
-                    <dd className="t-display-lg">{value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <div className="mt-10" data-reveal>
-                <a href="https://linktr.ee/Abhivyakti_2k26" target="_blank" rel="noopener noreferrer" className="btn-secondary">
-                  Abhivyakti 2026 links <ArrowUpRight size={16} strokeWidth={1.75} />
-                </a>
-              </div>
-            </>
+            <dl className="mt-14 grid grid-cols-3 border-y border-rule" data-stagger>
+              {[
+                ['3', 'Days'],
+                [String(currentData.events.length), 'Events'],
+                ['1', 'Fest'],
+              ].map(([value, label], i) => (
+                <div key={label} className={`flex flex-col-reverse py-8 ${i > 0 ? 'border-l border-rule pl-6 md:pl-10' : ''}`}>
+                  <dt className="label mt-2">{label}</dt>
+                  <dd className="font-display text-[clamp(44px,6vw,80px)] leading-none tracking-tight" data-count={value}>{value}</dd>
+                </div>
+              ))}
+            </dl>
           )}
         </div>
       </section>
 
       {/* Events */}
-      <section className="tile tile-parchment">
-        <div className="mx-auto max-w-[1100px]">
-          <h2 className="t-display-lg text-center" data-reveal>{isFlagship ? 'Event tracks' : 'Events and highlights'}</h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="section-tight bg-paper-2/60 border-y border-rule">
+        <div className="wrap">
+          <p className="label" data-reveal><span className="label-index">[{String(currentData.events.length).padStart(2, '0')}]</span> {isFlagship ? 'Event tracks' : 'Events and highlights'}</p>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-stagger>
             {currentData.events.map((event, idx) => (
-              <article key={`${activeTab}-${event.name}`} className="card flex flex-col" data-reveal>
-                <p className="t-caption-strong text-ink-48">{String(idx + 1).padStart(2, '0')}</p>
-                <h3 className="t-tagline mt-2">{event.name}</h3>
-                <p className="t-body mt-2 text-ink-80">{event.desc}</p>
+              <article key={`${activeTab}-${event.name}`} className="group card card-hover flex flex-col p-7">
+                <div className="flex items-start justify-between">
+                  <span className="label label-index">{String(idx + 1).padStart(2, '0')}</span>
+                  <ArrowUpRight size={16} strokeWidth={1.5} className="text-ink-3 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:text-copper" aria-hidden="true" />
+                </div>
+                <h3 className="display-sm mt-6">{event.name}</h3>
+                <p className="body small mt-3">{event.desc}</p>
                 {event.coordinators && (
-                  <p className="t-caption mt-auto pt-4 text-ink-48">Coordinators: {event.coordinators}</p>
+                  <p className="label mt-auto border-t border-rule pt-4 !normal-case !tracking-normal">
+                    <span className="uppercase tracking-[0.08em]">Coordinators</span> · {event.coordinators}
+                  </p>
                 )}
               </article>
             ))}
@@ -196,14 +204,17 @@ const Abhivyakti = () => {
 
       {/* Organising committee */}
       {currentData.team.length > 0 && (
-        <section className="tile tile-dark on-dark">
-          <div className="mx-auto max-w-[1100px]">
-            <h2 className="t-display-lg text-center" data-reveal>Organising committee</h2>
-            <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        <section className="section-tight">
+          <div className="wrap grid gap-10 lg:grid-cols-[320px_1fr]">
+            <div>
+              <p className="label" data-reveal><span className="label-index">[{activeTab}]</span> Organising committee</p>
+              <SplitText as="h2" className="display-md mt-5" key={`team-${activeTab}`}>The team who <em>made it happen.</em></SplitText>
+            </div>
+            <ul className="border-t border-rule" data-stagger>
               {currentData.team.map((member) => (
-                <li key={member.name} className="card-dark !p-5" data-reveal>
-                  <p className="t-caption text-body-muted">{member.role}</p>
-                  <p className="t-body-strong mt-1">{member.name}</p>
+                <li key={member.name} className="group flex items-baseline justify-between gap-6 border-b border-rule py-5">
+                  <span className="font-display text-[22px] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-2">{member.name}</span>
+                  <span className="label text-right">{member.role}</span>
                 </li>
               ))}
             </ul>

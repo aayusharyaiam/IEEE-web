@@ -16,7 +16,7 @@ export default function SiteLoader() {
   if (!visible) return null;
   return (
     <div className="site-loader" role="status" aria-label="Loading IEEE BIT Patna">
-      <div className="site-loader__mark">IEEE</div>
+      <div className="site-loader__mark">ieee</div>
       <div className="site-loader__bar"><span /></div>
     </div>
   );

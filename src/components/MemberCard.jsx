@@ -1,93 +1,73 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
+import { ArrowUpRight, Mail } from 'lucide-react';
 import ImageWithSkeleton from './ImageWithSkeleton';
+import { BRANCH_EMAIL, BRANCH_LINKEDIN } from '../data/committee';
 
-gsap.registerPlugin(ScrollTrigger);
+const initials = (name) =>
+  name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('');
 
-const MemberCard = ({ name, role, index, image, linkedin, email }) => {
-  const cardRef = useRef(null);
-  const linkedinUrl = linkedin || 'https://www.linkedin.com/company/ieee-student-branch-bit-patna/';
-  const emailAddress = email || 'ieeebitp@gmail.com';
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(cardRef.current,
-        { y: 60, opacity: 0, scale: 0.9, rotateY: -8 },
-        {
-          y: 0, opacity: 1, scale: 1, rotateY: 0,
-          duration: 0.8, ease: 'power3.out', delay: index * 0.1,
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: 'top 90%',
-          }
-        }
-      );
-    });
-    return () => ctx.revert();
-  }, [index]);
+/**
+ * Portrait card: name and role sit on a soft gradient over the photo.
+ * Hover lifts the card, zooms the photo and slides the contact links up.
+ * Members without a photo get an italic serif monogram.
+ * `compact` is the smaller alumni variant without contact links.
+ */
+const MemberCard = ({ name, role, image, linkedin, email, compact = false }) => {
+  const linkedinUrl = linkedin || BRANCH_LINKEDIN;
+  const emailAddress = email || BRANCH_EMAIL;
+  const chip = image ? 'bg-paper/15 hover:bg-paper hover:text-ink' : 'bg-ink/5 hover:bg-ink hover:text-paper';
 
   return (
-    <div ref={cardRef} className="group member-card relative overflow-hidden rounded-lg bg-surface-container-low hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(60,215,255,0.2)] transition-all duration-500 perspective-[600px]">
-      <div className="aspect-4/5 overflow-hidden relative bg-surface-container-highest flex items-center justify-center">
+    <article className="group card card-hover overflow-hidden">
+      <div className="zoom-frame relative aspect-[4/5] bg-paper-2">
         {image ? (
-          <ImageWithSkeleton
-            src={image}
-            alt={`${name} profile`}
-            className="h-full w-full object-cover"
-            loading="lazy"
-          />
+          <ImageWithSkeleton src={image} alt={`${name}, ${role}`} className="h-full w-full object-cover" loading="lazy" />
         ) : (
-          <span className="text-6xl text-on-surface-variant/20 font-bold group-hover:text-tertiary/50 group-hover:scale-125 transition-all duration-500 uppercase">
-            {name.charAt(0)}
-          </span>
+          <div className="grid-paper flex h-full w-full items-center justify-center pb-16" aria-hidden="true">
+            <span className={`font-display italic font-light text-ink/20 transition-colors duration-500 group-hover:text-copper ${compact ? 'text-[56px]' : 'text-[80px]'}`}>
+              {initials(name)}
+            </span>
+          </div>
         )}
-        <div className="absolute inset-0 bg-linear-to-b from-transparent to-surface-container-lowest/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        
-        <div className="social-overlay hidden md:flex absolute inset-0 bg-primary-container/60 backdrop-blur-sm items-center justify-center gap-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${name} LinkedIn profile`}
-            className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
-          >
-            <span className="material-symbols-outlined">link</span>
-          </a>
-          <a
-            href={`mailto:${emailAddress}`}
-            aria-label={`Email ${name}`}
-            className="w-12 h-12 rounded-full bg-surface/60 flex items-center justify-center text-on-surface hover:bg-tertiary hover:text-on-tertiary hover:scale-110 transition-all"
-          >
-            <span className="material-symbols-outlined">alternate_email</span>
-          </a>
+
+        <div
+          className={`absolute inset-x-0 bottom-0 ${image ? 'bg-gradient-to-t from-night/85 via-night/40 to-transparent text-paper' : 'text-ink'} ${compact ? 'p-4 pt-12' : 'p-5 pt-16'}`}
+        >
+          <p className={`label ${image ? '!text-paper/70' : ''} ${compact ? '!text-[10px]' : ''}`}>{role}</p>
+          <h3 className={`mt-1.5 font-display tracking-tight leading-tight ${compact ? 'text-[17px]' : 'text-[22px]'}`}>{name}</h3>
+
+          {!compact && (
+            <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[var(--ease-out-expo)] group-hover:grid-rows-[1fr] group-focus-within:grid-rows-[1fr] [@media(hover:none)]:grid-rows-[1fr]">
+              <div className="overflow-hidden">
+                <div className="flex gap-2 pt-3">
+                  <a
+                    href={linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-[12px] font-medium backdrop-blur transition-colors ${chip}`}
+                    aria-label={`${name} on LinkedIn`}
+                  >
+                    LinkedIn <ArrowUpRight size={12} strokeWidth={2} />
+                  </a>
+                  <a
+                    href={`mailto:${emailAddress}`}
+                    className={`inline-flex items-center rounded-full px-2.5 py-1.5 backdrop-blur transition-colors ${chip}`}
+                    aria-label={`Email ${name}`}
+                  >
+                    <Mail size={13} strokeWidth={2} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <div className="p-6">
-        <h3 className="text-xl font-semibold text-on-surface mb-1 group-hover:text-tertiary transition-colors">{name}</h3>
-        <p className="text-tertiary text-sm font-medium tracking-wider uppercase">{role}</p>
-        <div className="mt-4 flex md:hidden items-center gap-3">
-          <a
-            href={linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${name} LinkedIn profile`}
-            className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-base">link</span>
-            LinkedIn
-          </a>
-          <a
-            href={`mailto:${emailAddress}`}
-            aria-label={`Email ${name}`}
-            className="h-9 px-3 rounded-full bg-surface-container-high text-on-surface text-sm font-medium flex items-center gap-1.5"
-          >
-            <span className="material-symbols-outlined text-base">alternate_email</span>
-            Email
-          </a>
-        </div>
-      </div>
-    </div>
+    </article>
   );
 };
 

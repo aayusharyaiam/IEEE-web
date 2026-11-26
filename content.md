@@ -73,14 +73,34 @@ Assistant Professor | IEEE SB Counsellor
 ## TITLE
 EXECUTIVE COMMITTEE
 
-## MEMBERS
+## MEMBERS (2026–2027)
 
+Source: IEEE SB office order IEEE/13/10/26, dated 13 Oct 2026, signed by Dr. Mayank Singh (Faculty Advisor / IEEE Student Branch Counsellor). Data lives in `src/data/committee.js`.
+
+Sahil Gurg — Chair  
+Rishika Chatterjee — Vice-Chair  
+Aayush Arya — Secretary  
+Sunny Singh — Treasurer  
+Krish Agarwal — Webmaster  
+
+## ALUMNI
+
+### 2025–2026
+Pranjal Bhattacharya — Chair Person  
+Somnath Mahto — Vice Chair Person  
+Harishta Chaubey — Secretary  
+Rajdeep Das — Co Secretary  
+Md Mehran Ansari — Web Master  
+Aayush Arya — Co Web Master  
+Ronak Sharma — Treasurer  
+Sahil Gurg — Co Treasurer  
+
+### 2024–2025
 Arnav Shivam — Chair Person  
 Sneha Sharma — Vice Chair Person  
 Asman Kumari — Secretary  
 Syed Fahad Ahmed — Treasurer  
 Pushkar Kumar — Technical Coordinator  
-Md Mehran Ansari — Webmaster  
 Meenakshi Sinha — Design & Editing Coordinator  
 
 ---

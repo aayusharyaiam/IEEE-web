@@ -1,338 +1,147 @@
-import React, { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SEO from "../components/SEO";
+import React, { useEffect, useState } from 'react';
+import { ArrowUpRight, QrCode, X } from 'lucide-react';
+import SEO from '../components/SEO';
+import useReveal from '../hooks/useReveal';
+import { BtnArrow, SplitText } from '../components/Reveal';
+import { BRANCH_EMAIL, BRANCH_LINKEDIN } from '../data/committee';
 
-gsap.registerPlugin(ScrollTrigger);
+const socials = [
+  { label: 'IEEE.org', href: 'https://www.ieee.org' },
+  { label: 'LinkedIn', href: BRANCH_LINKEDIN },
+  { label: 'Instagram', href: 'https://www.instagram.com/ieee_bitpatna/' },
+];
 
 const Contact = () => {
-  const pageRef = useRef(null);
+  const pageRef = useReveal();
   const [showQR, setShowQR] = useState(false);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Hero split-text
-      const h1 = pageRef.current?.querySelector(".contact-title");
-      if (h1) {
-        h1.innerHTML = h1.textContent.replace(
-          /\S+/g,
-          '<span class="ct-word inline-block">$&</span>',
-        );
-        gsap.fromTo(
-          ".ct-word",
-          { y: 50, opacity: 0, rotateX: -45 },
-          {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-            duration: 0.7,
-            stagger: 0.05,
-            ease: "power4.out",
-            delay: 0.15,
-          },
-        );
-      }
-      gsap.fromTo(
-        ".contact-desc",
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.5 },
-      );
-
-      // Form container
-      gsap.fromTo(
-        ".contact-form",
-        { y: 60, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.3 },
-      );
-
-      // Right column stagger
-      gsap.fromTo(
-        ".contact-right > *",
-        { y: 40, opacity: 0, scale: 0.95 },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          stagger: 0.12,
-          duration: 0.8,
-          ease: "power3.out",
-          delay: 0.4,
-        },
-      );
-
-      // Info cards stagger
-      gsap.fromTo(
-        ".info-card",
-        { y: 30, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: { trigger: ".info-grid", start: "top 85%" },
-        },
-      );
-
-      // Map parallax
-      gsap.to(".map-img", {
-        scrollTrigger: {
-          trigger: ".map-container",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 2,
-        },
-        y: -30,
-        scale: 1.08,
-      });
-    });
-    return () => ctx.revert();
-  }, []);
+    if (!showQR) return undefined;
+    const onKey = (e) => e.key === 'Escape' && setShowQR(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [showQR]);
 
   return (
-    <>
-      <SEO title="Contact Us" description="Connect with IEEE Student Branch BIT Patna for collaborations, memberships, events, and student opportunities." path="/contact" />
-      <main
-        ref={pageRef}
-        className="relative min-h-screen pt-24 pb-24 overflow-hidden"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 2px 2px, rgba(60, 215, 255, 0.05) 1px, transparent 0)",
-          backgroundSize: "40px 40px",
-        }}
-      >
-        {/* Hero Section / Title */}
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <h1 className="contact-title text-5xl md:text-7xl font-bold tracking-tighter text-primary mb-4 uppercase perspective-midrange">
-            GET IN TOUCH
-          </h1>
-          <p className="contact-desc text-on-surface-variant max-w-2xl text-lg opacity-0">
-            Have questions about IEEE BIT Patna? Whether you are a student,
-            professional, or researcher, we are here to bridge the gap between
-            innovation and community.
+    <div ref={pageRef}>
+      <SEO path="/contact" />
+
+      <section className="section !pt-16 md:!pt-24">
+        <div className="wrap">
+          <p className="label" data-reveal><span className="label-index">[@]</span> Contact</p>
+          <SplitText as="h1" className="display-xl mt-6">
+            Let's <em>talk.</em>
+          </SplitText>
+          <p className="lede mt-8 max-w-[56ch]" data-reveal data-reveal-delay="0.2">
+            Have questions about IEEE BIT Patna? Whether you are a student, professional, or researcher, we are here to bridge the gap between innovation and community.
           </p>
-        </div>
+          <div className="rule mt-14" data-rule="" aria-hidden="true" />
 
-        {/* Split 50/50 Content */}
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column: Form */}
-          <div className="contact-form flex flex-col space-y-8 opacity-0">
-            <div className="bg-surface-container-low p-8 md:p-12 rounded-lg border border-outline-variant/10 shadow-xl relative mt-4 hover:shadow-[0_0_40px_rgba(60,215,255,0.08)] transition-shadow duration-500">
-              <form className="space-y-10 group/form">
-                <div className="relative pt-6">
-                  <input
-                    required
-                    id="name"
-                    type="text"
-                    placeholder=" "
-                    className="w-full bg-surface-container-highest border-0 border-b-2 border-outline-variant focus:border-tertiary focus:ring-0 text-on-surface px-4 py-3 transition-all rounded-t-md peer outline-none"
-                  />
-                  <label
-                    htmlFor="name"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-tertiary peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-tertiary uppercase tracking-widest font-medium pointer-events-none"
-                  >
-                    Full Name
-                  </label>
-                </div>
-                <div className="relative pt-6">
-                  <input
-                    required
-                    id="email"
-                    type="email"
-                    placeholder=" "
-                    className="w-full bg-surface-container-highest border-0 border-b-2 border-outline-variant focus:border-tertiary focus:ring-0 text-on-surface px-4 py-3 transition-all rounded-t-md peer outline-none"
-                  />
-                  <label
-                    htmlFor="email"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant transition-all peer-focus:-top-4 peer-focus:text-xs peer-focus:text-tertiary peer-not-placeholder-shown:-top-4 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-tertiary uppercase tracking-widest font-medium pointer-events-none"
-                  >
-                    Email Address
-                  </label>
-                </div>
-                <div className="relative pt-6">
-                  <textarea
-                    required
-                    id="message"
-                    rows="4"
-                    placeholder=" "
-                    className="w-full bg-surface-container-highest border-0 border-b-2 border-outline-variant focus:border-tertiary focus:ring-0 text-on-surface px-4 py-3 transition-all rounded-t-md peer outline-none resize-none"
-                  ></textarea>
-                  <label
-                    htmlFor="message"
-                    className="absolute left-4 top-10 -translate-y-1/2 text-on-surface-variant transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-tertiary peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-tertiary uppercase tracking-widest font-medium pointer-events-none"
-                  >
-                    Your Message
-                  </label>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full group relative overflow-hidden bg-linear-to-r from-primary-container to-secondary-container py-4 rounded-xl font-bold text-on-surface tracking-tight hover:shadow-[0_0_20px_rgba(60,215,255,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all mt-4"
-                >
-                  <span className="relative z-10">Send Message</span>
-                  <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Right Column: Map & Details */}
-          <div className="contact-right flex flex-col space-y-8 mt-4">
-            {/* Map Placeholder */}
-            <a
-              href="https://maps.app.goo.gl/GxnZsdpVK1A74P126"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="map-container relative w-full h-[280px] rounded-lg overflow-hidden group block cursor-pointer"
+          <div className="mt-14 grid gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-24">
+            {/* Form */}
+            <form
+              className="space-y-8"
+              data-stagger
+              onSubmit={(e) => {
+                e.preventDefault();
+                const data = new FormData(e.currentTarget);
+                const subject = encodeURIComponent(`Message from ${data.get('name')}`);
+                const body = encodeURIComponent(`${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`);
+                window.location.href = `mailto:${BRANCH_EMAIL}?subject=${subject}&body=${body}`;
+              }}
             >
-              <iframe
-                title="BIT Patna Map"
-                src="https://www.google.com/maps?q=BIT%20Patna&output=embed"
-                className="map-img w-full h-full border-0 md:grayscale md:opacity-60 md:group-hover:grayscale-0 md:group-hover:opacity-90 transition-all duration-700"
-                loading="lazy"
-              ></iframe>
-
-              <div className="absolute inset-0 bg-linear-to-t from-background via-transparent to-transparent"></div>
-
-              <div className="absolute bottom-6 left-6 glass-panel p-4 rounded-lg border border-white/10 flex items-center space-x-4">
-                <div className="bg-tertiary/20 p-2 rounded-full flex items-center justify-center">
-                  <span
-                    className="material-symbols-outlined text-tertiary"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    location_on
-                  </span>
-                </div>
-                <div>
-                  <p className="text-xs uppercase font-label tracking-widest font-medium text-tertiary">
-                    Our Campus
-                  </p>
-                  <p className="font-semibold text-sm">BIT Patna, Bihar, IN</p>
-                </div>
+              <h2 className="display-sm">Send us a message</h2>
+              <div className="field-wrap">
+                <label htmlFor="name" className="label">Full name</label>
+                <input required id="name" name="name" type="text" autoComplete="name" className="field" placeholder="First and last name" />
               </div>
-            </a>
-
-            <div className="info-grid grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a
-                href="mailto:ieeebitp@gmail.com"
-                className="info-card glass-panel p-6 rounded-lg border border-white/5 hover:border-tertiary/30 hover:-translate-y-1 transition-all duration-300 group block"
-              >
-                <span className="material-symbols-outlined text-tertiary mb-3 block group-hover:scale-110 transition-transform">
-                  mail
-                </span>
-                <h4 className="font-label text-xs uppercase tracking-widest font-medium text-on-surface-variant mb-1">
-                  Email Us
-                </h4>
-                <p className="text-on-surface font-medium text-sm">
-                  ieeebitp@gmail.com
-                </p>
-              </a>
-
-              <a
-                href="tel:+916122273615"
-                className="info-card glass-panel p-6 rounded-lg border border-white/5 hover:border-tertiary/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center group"
-              >
-                <span className="material-symbols-outlined text-tertiary mb-3 block group-hover:scale-110 transition-transform">
-                  phone
-                </span>
-                <h4 className="font-label text-xs uppercase tracking-widest font-medium text-on-surface-variant mb-1">
-                  Call Us
-                </h4>
-                <p className="text-on-surface font-medium text-sm">
-                  +91 612 2273615
-                </p>
-              </a>
-
-              <div className="info-card md:col-span-2 glass-panel p-6 rounded-lg border border-white/5 hover:border-tertiary/30 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center group">
-                <h4 className="font-label text-xs uppercase tracking-widest font-medium text-on-surface-variant mb-2">
-                  Address
-                </h4>
-                <p className="text-on-surface text-sm font-medium leading-relaxed">
-                  BIT Patna Campus,
-                  <br />
-                  Near Patna Airport,
-                  <br />
-                  Patna, Bihar 800014
-                </p>
+              <div className="field-wrap">
+                <label htmlFor="email" className="label">Email address</label>
+                <input required id="email" name="email" type="email" autoComplete="email" className="field" placeholder="you@example.com" />
               </div>
+              <div className="field-wrap">
+                <label htmlFor="message" className="label">Your message</label>
+                <textarea required id="message" name="message" rows="4" className="field" placeholder="How can we help?" />
+              </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <button type="submit" className="btn btn-primary">Send message <BtnArrow /></button>
+                <p className="small text-ink-3">Opens your email app with the message filled in.</p>
+              </div>
+            </form>
 
-              <div className="info-card md:col-span-2 glass-panel p-6 rounded-lg border border-white/5 hover:border-tertiary/30 hover:-translate-y-1 transition-all duration-300 flex justify-between items-center group">
-                <div>
-                  <h4 className="font-label text-xs uppercase tracking-widest font-medium text-on-surface-variant mb-1">
-                    Follow the Innovation
-                  </h4>
-                  <div className="flex space-x-4 mt-2">
-                    <a
-                      href="https://www.ieee.org"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-on-surface-variant hover:text-tertiary hover:scale-125 transition-all"
-                    >
-                      <span className="material-symbols-outlined">public</span>
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/company/ieee-student-branch-bit-patna/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-on-surface-variant hover:text-tertiary hover:scale-125 transition-all"
-                    >
-                      <span className="material-symbols-outlined">groups</span>
-                    </a>
-                    <a
-                      href="https://www.instagram.com/ieee_bitpatna/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-on-surface-variant hover:text-tertiary hover:scale-125 transition-all"
-                    >
-                      <span className="material-symbols-outlined">share</span>
-                    </a>
+            {/* Details */}
+            <div className="space-y-10">
+              <dl className="border-t border-rule" data-stagger>
+                {[
+                  { k: 'Email', v: BRANCH_EMAIL, href: `mailto:${BRANCH_EMAIL}` },
+                  { k: 'Phone', v: '+91 612 2273615', href: 'tel:+916122273615' },
+                  { k: 'Visit', v: 'BIT Patna Campus, Near Patna Airport, Patna, Bihar 800014', href: 'https://maps.app.goo.gl/GxnZsdpVK1A74P126', external: true },
+                ].map((row) => (
+                  <div key={row.k} className="border-b border-rule">
+                    <dt className="sr-only">{row.k}</dt>
+                    <dd>
+                      <a
+                        href={row.href}
+                        {...(row.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                        className="group grid grid-cols-[72px_1fr_auto] items-center gap-4 py-5"
+                      >
+                        <span className="label" aria-hidden="true">{row.k}</span>
+                        <span className="font-display text-[19px] leading-snug break-words transition-colors group-hover:text-copper">{row.v}</span>
+                        <ArrowUpRight size={18} strokeWidth={1.5} className="text-ink-3 transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink" />
+                      </a>
+                    </dd>
                   </div>
+                ))}
+              </dl>
+
+              <div className="ticks overflow-hidden rounded-[14px] border border-rule" data-reveal="clip">
+                <iframe
+                  title="BIT Patna on Google Maps"
+                  src="https://www.google.com/maps?q=BIT%20Patna&output=embed"
+                  className="block h-[260px] w-full border-0 grayscale-[0.6] contrast-[1.05] transition-[filter] duration-700 hover:grayscale-0"
+                  loading="lazy"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-4" data-reveal>
+                <div className="flex flex-wrap gap-x-6 gap-y-2">
+                  {socials.map((s) => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" className="link-draw small">
+                      {s.label}
+                    </a>
+                  ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowQR(true);
-                  }}
-                  className="relative z-10 bg-surface-container-highest p-4 rounded-xl hover:scale-110 transition-transform cursor-pointer"
-                >
-                  <span
-                    className="material-symbols-outlined text-tertiary text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    qr_code_2
-                  </span>
+                <button type="button" onClick={() => setShowQR(true)} className="btn btn-ghost btn-sm" aria-label="Show Linktree QR code">
+                  <QrCode size={15} strokeWidth={1.75} /> Linktree QR
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </section>
 
-      {/* Linktree QR Popup */}
       {showQR && (
         <div
-          className="fixed inset-0 z-100 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-night/60 p-4 backdrop-blur-sm animate-[fade-in_0.2s_ease-out]"
           onClick={() => setShowQR(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Linktree QR code"
         >
-          <div
-            className="relative max-w-sm w-full bg-surface-container-low rounded-2xl overflow-hidden shadow-2xl border border-outline-variant/20 animate-[scaleIn_0.3s_ease-out]"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="relative w-full max-w-sm overflow-hidden rounded-[18px] bg-card animate-[scale-in_0.3s_ease-out]" onClick={(e) => e.stopPropagation()}>
             <button
+              type="button"
               onClick={() => setShowQR(false)}
-              className="absolute top-3 right-3 z-10 bg-surface/80 backdrop-blur-sm w-10 h-10 rounded-full flex items-center justify-center text-on-surface hover:bg-error hover:text-on-error transition-all hover:scale-110"
+              className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-ink text-paper transition-transform hover:rotate-90"
+              aria-label="Close"
             >
-              <span className="material-symbols-outlined">close</span>
+              <X size={18} strokeWidth={1.75} />
             </button>
-            <img
-              src="/linktree.jpeg"
-              alt="Linktree QR Code"
-              className="w-full h-auto"
-            />
+            <img src="/linktree.jpeg" alt="Linktree QR code for IEEE BIT Patna" className="h-auto w-full" />
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

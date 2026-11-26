@@ -4,6 +4,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import SEO from '../components/SEO';
 import ImageWithSkeleton from '../components/ImageWithSkeleton';
 import MemberCard from '../components/MemberCard';
+import ProjectSpotlight from '../components/ProjectSpotlight';
 import { BtnArrow, SectionHead, SplitText, Ticker } from '../components/Reveal';
 import useReveal from '../hooks/useReveal';
 import { committee, currentTerm, facultyAdvisor } from '../data/committee';
@@ -225,10 +226,13 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ── Student project spotlight ────────────────────── */}
+      <ProjectSpotlight index="04" />
+
       {/* ── Gallery ──────────────────────────────────────── */}
-      <section className="section">
+      <section className="section border-t border-rule">
         <div className="wrap">
-          <SectionHead index="04" label="Visual journey" title={<>Life at <em>IEEE BITP.</em></>} />
+          <SectionHead index="05" label="Visual journey" title={<>Life at <em>IEEE BITP.</em></>} />
           <div className="mt-12 grid grid-cols-2 gap-3 md:auto-rows-[260px] md:grid-cols-4 md:gap-4">
             {[
               { src: '/gallery/poster.jpeg', alt: 'Annual Technical Summit', cls: 'col-span-2 aspect-[4/3] md:row-span-2 md:aspect-auto' },
@@ -262,7 +266,7 @@ const Home = () => {
             </figcaption>
           </figure>
           <div>
-            <p className="label" data-reveal><span className="label-index">[05]</span> Message from the Counsellor</p>
+            <p className="label" data-reveal><span className="label-index">[06]</span> Message from the Counsellor</p>
             <blockquote className="mt-8">
               <SplitText as="p" className="display-md !leading-[1.25]">
                 <span className="text-copper">“</span>As the branch counsellor of IEEE Student Branch BIT PATNA, I welcome you to <em>IEEE family.</em>
